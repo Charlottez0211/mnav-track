@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SBET & BMNR mNAV 实时追踪</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- 页面标题 -->
+        <header class="header">
+            <h1><i class="fas fa-chart-line"></i> SBET & BMNR mNAV 实时追踪</h1>
+            <p class="subtitle">每30分钟自动更新 | mNAV = 股价 × 股本数量 ÷ ETH持仓量 ÷ ETH价格</p>
+        </header>
+
+        <!-- 状态指示器 -->
+        <div class="status-bar">
+            <div class="status-item">
+                <span class="status-label">系统状态:</span>
+                <span id="system-status" class="status-value loading">加载中...</span>
+            </div>
+            <div class="status-item">
+                <span class="status-label">最后更新:</span>
+                <span id="last-update" class="status-value">--</span>
+            </div>
+            <div class="status-item">
+                <button id="manual-update-btn" class="update-btn">
+                    <i class="fas fa-sync-alt"></i> 手动更新
+                </button>
+            </div>
+        </div>
+
+        <!-- 实时数据卡片 -->
+        <div class="cards-container">
+            <!-- SBET 卡片 -->
+            <div class="card">
+                <div class="card-header">
+                    <h3><i class="fas fa-building"></i> SBET</h3>
+                    <div class="card-status" id="sbet-status">
+                        <i class="fas fa-circle"></i>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <div class="main-metric">
+                        <span class="metric-label">mNAV</span>
+                        <span id="sbet-mnav" class="metric-value">--</span>
+                    </div>
+                    <div class="sub-metrics">
+                        <div class="sub-metric">
+                            <span class="sub-label">股价</span>
+                            <span id="sbet-price" class="sub-value">$--</span>
+                        </div>
+                        <div class="sub-metric">
+                            <span class="sub-label">股本数量</span>
+                            <span id="sbet-shares" class="sub-value">--</span>
+                        </div>
+                        <div class="sub-metric">
+                            <span class="sub-label">ETH持仓</span>
+                            <span id="sbet-eth-holdings" class="sub-value">--</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- BMNR 卡片 -->
+            <div class="card">
+                <div class="card-header">
+                    <h3><i class="fas fa-building"></i> BMNR</h3>
+                    <div class="card-status" id="bmnr-status">
+                        <i class="fas fa-circle"></i>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <div class="main-metric">
+                        <span class="metric-label">mNAV</span>
+                        <span id="bmnr-mnav" class="metric-value">--</span>
+                    </div>
+                    <div class="sub-metrics">
+                        <div class="sub-metric">
+                            <span class="sub-label">股价</span>
+                            <span id="bmnr-price" class="sub-value">$--</span>
+                        </div>
+                        <div class="sub-metric">
+                            <span class="sub-label">股本数量</span>
+                            <span id="bmnr-shares" class="sub-value">--</span>
+                        </div>
+                        <div class="sub-metric">
+                            <span class="sub-label">ETH持仓</span>
+                            <span id="bmnr-eth-holdings" class="sub-value">--</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ETH 价格卡片 -->
+            <div class="card eth-card">
+                <div class="card-header">
+                    <h3><i class="fab fa-ethereum"></i> ETH</h3>
+                    <div class="card-status" id="eth-status">
+                        <i class="fas fa-circle"></i>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <div class="main-metric">
+                        <span class="metric-label">价格</span>
+                        <span id="eth-price" class="metric-value">$--</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 配置面板 -->
+        <div class="config-section">
+            <h3><i class="fas fa-cog"></i> 配置管理</h3>
+            <div class="config-cards">
+                <div class="config-card">
+                    <h4>SBET 配置</h4>
+                    <form id="sbet-config-form">
+                        <div class="form-group">
+                            <label for="sbet-shares-input">股本数量:</label>
+                            <input type="number" id="sbet-shares-input" step="0.01" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="sbet-eth-input">ETH持仓量:</label>
+                            <input type="number" id="sbet-eth-input" step="0.01" required>
+                        </div>
+                        <button type="submit" class="config-btn">
+                            <i class="fas fa-save"></i> 更新 SBET
+                        </button>
+                    </form>
+                </div>
+
+                <div class="config-card">
+                    <h4>BMNR 配置</h4>
+                    <form id="bmnr-config-form">
+                        <div class="form-group">
+                            <label for="bmnr-shares-input">股本数量:</label>
+                            <input type="number" id="bmnr-shares-input" step="0.01" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="bmnr-eth-input">ETH持仓量:</label>
+                            <input type="number" id="bmnr-eth-input" step="0.01" required>
+                        </div>
+                        <button type="submit" class="config-btn">
+                            <i class="fas fa-save"></i> 更新 BMNR
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- 历史图表部分 (已注释) -->
+        <!-- 
+        <div class="chart-section">
+            <div class="chart-header">
+                <h3><i class="fas fa-chart-line"></i> 历史走势图表</h3>
+                <button id="refresh-chart-btn" class="refresh-btn">
+                    <i class="fas fa-sync-alt"></i> 刷新图表
+                </button>
+            </div>
+            <div class="chart-container">
+                <div id="chart-loading" class="loading-indicator" style="display: none;">
+                    <i class="fas fa-spinner fa-spin"></i> 正在生成图表...
+                </div>
+                <div id="chart-content">
+                    <img id="historical-chart" src="" alt="历史走势图表" style="display: none;">
+                    <div id="chart-placeholder" class="chart-placeholder">
+                        <i class="fas fa-chart-line"></i>
+                        <p>点击"刷新图表"按钮生成历史走势图</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        -->
+
+        <!-- 页脚信息 -->
+        <footer class="footer">
+            <p>© 2024 mNAV 追踪系统 | 数据来源: Finnhub, CoinGecko | 更新频率: 每小时</p>
+        </footer>
+    </div>
+
+    <!-- 通知容器 -->
+    <div id="notification-container"></div>
+
+    <!-- JavaScript -->
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html> 

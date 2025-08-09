@@ -1,0 +1,373 @@
+2025-08-09 20:51:23,010 - INFO - 数据库初始化完成
+2025-08-09 20:51:23,013 - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2025-08-09 20:51:23,014 - INFO - Added job "MNAVTracker.update_prices_and_mnav" to job store "default"
+2025-08-09 20:51:23,014 - INFO - Scheduler started
+2025-08-09 20:51:23,014 - INFO - 开始更新价格和 mNAV 数据...
+2025-08-09 20:51:23,014 - INFO - 正在从 Finnhub 获取 SBET 价格...
+2025-08-09 20:51:24,348 - INFO - ✓ 从 Finnhub 获取 SBET 价格成功: $23.9200
+2025-08-09 20:51:24,348 - INFO -   价格变化: $0.5600 (2.40%)
+2025-08-09 20:51:26,353 - INFO - 正在从 Finnhub 获取 BMNR 价格...
+2025-08-09 20:51:26,803 - INFO - ✓ 从 Finnhub 获取 BMNR 价格成功: $51.4300
+2025-08-09 20:51:26,803 - INFO -   价格变化: $10.1500 (24.59%)
+2025-08-09 20:51:29,894 - INFO - 从 CoinGecko 获取 ETH 价格成功: $4196.05
+2025-08-09 20:51:29,895 - INFO - 24小时变化: 7.58%
+2025-08-09 20:51:29,895 - INFO - 市值: $506,432,097,066
+2025-08-09 20:51:29,895 - INFO - 24小时成交量: $43,437,820,830
+2025-08-09 20:51:29,904 - INFO - 更新了 2025-08-09 的历史数据
+2025-08-09 20:51:29,907 - INFO - 价格和 mNAV 数据更新完成
+2025-08-09 20:51:29,941 - WARNING -  * Debugger is active!
+2025-08-09 20:51:29,949 - INFO -  * Debugger PIN: 583-003-439
+2025-08-09 20:51:49,067 - INFO -  * Detected change in '/Users/charlotte/Documents/Code/sbet bmnr website/app.py', reloading
+2025-08-09 20:51:49,071 - INFO - Scheduler has been shut down
+2025-08-09 20:51:49,367 - INFO - 数据库初始化完成
+2025-08-09 20:51:49,369 - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2025-08-09 20:51:49,369 - INFO - Added job "MNAVTracker.update_prices_and_mnav" to job store "default"
+2025-08-09 20:51:49,369 - INFO - Scheduler started
+2025-08-09 20:51:49,370 - INFO - 开始更新价格和 mNAV 数据...
+2025-08-09 20:51:49,370 - INFO - 正在从 Finnhub 获取 SBET 价格...
+2025-08-09 20:51:50,208 - INFO - ✓ 从 Finnhub 获取 SBET 价格成功: $23.9200
+2025-08-09 20:51:50,208 - INFO -   价格变化: $0.5600 (2.40%)
+2025-08-09 20:51:52,214 - INFO - 正在从 Finnhub 获取 BMNR 价格...
+2025-08-09 20:51:52,626 - INFO - ✓ 从 Finnhub 获取 BMNR 价格成功: $51.4300
+2025-08-09 20:51:52,626 - INFO -   价格变化: $10.1500 (24.59%)
+2025-08-09 20:51:55,691 - INFO - 从 CoinGecko 获取 ETH 价格成功: $4196.05
+2025-08-09 20:51:55,691 - INFO - 24小时变化: 7.58%
+2025-08-09 20:51:55,691 - INFO - 市值: $506,432,097,066
+2025-08-09 20:51:55,691 - INFO - 24小时成交量: $43,437,820,830
+2025-08-09 20:51:55,695 - ERROR - 更新历史数据CSV文件时出错: name 'pd' is not defined
+2025-08-09 20:51:55,696 - INFO - 价格和 mNAV 数据更新完成
+2025-08-09 20:51:55,730 - WARNING -  * Debugger is active!
+2025-08-09 20:51:55,739 - INFO -  * Debugger PIN: 583-003-439
+2025-08-09 20:51:55,746 - INFO - 127.0.0.1 - - [09/Aug/2025 20:51:55] "GET /api/data HTTP/1.1" 200 -
+2025-08-09 21:06:51,713 - INFO - 127.0.0.1 - - [09/Aug/2025 21:06:51] "GET /api/data HTTP/1.1" 200 -
+2025-08-09 21:06:55,963 - INFO - 开始更新价格和 mNAV 数据...
+2025-08-09 21:06:55,963 - INFO - 正在从 Finnhub 获取 SBET 价格...
+2025-08-09 21:06:56,794 - INFO - ✓ 从 Finnhub 获取 SBET 价格成功: $23.9200
+2025-08-09 21:06:56,794 - INFO -   价格变化: $0.5600 (2.40%)
+2025-08-09 21:06:58,799 - INFO - 正在从 Finnhub 获取 BMNR 价格...
+2025-08-09 21:06:59,176 - INFO - ✓ 从 Finnhub 获取 BMNR 价格成功: $51.4300
+2025-08-09 21:06:59,176 - INFO -   价格变化: $10.1500 (24.59%)
+2025-08-09 21:07:01,845 - INFO - 从 CoinGecko 获取 ETH 价格成功: $4196.56
+2025-08-09 21:07:01,846 - INFO - 24小时变化: 7.73%
+2025-08-09 21:07:01,846 - INFO - 市值: $506,543,245,319
+2025-08-09 21:07:01,846 - INFO - 24小时成交量: $43,442,328,269
+2025-08-09 21:07:01,849 - ERROR - 更新历史数据CSV文件时出错: name 'pd' is not defined
+2025-08-09 21:07:01,850 - INFO - 价格和 mNAV 数据更新完成
+2025-08-09 21:07:01,850 - INFO - 127.0.0.1 - - [09/Aug/2025 21:07:01] "POST /api/manual_update HTTP/1.1" 200 -
+2025-08-09 21:07:01,864 - INFO - 127.0.0.1 - - [09/Aug/2025 21:07:01] "GET /api/data HTTP/1.1" 200 -
+2025-08-09 21:08:19,651 - INFO -  * Detected change in '/Users/charlotte/Documents/Code/sbet bmnr website/app.py', reloading
+2025-08-09 21:08:19,654 - INFO - Scheduler has been shut down
+2025-08-09 21:08:19,984 - INFO - 数据库初始化完成
+2025-08-09 21:08:19,988 - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2025-08-09 21:08:19,988 - INFO - Added job "MNAVTracker.update_prices_and_mnav" to job store "default"
+2025-08-09 21:08:19,988 - INFO - Scheduler started
+2025-08-09 21:08:19,989 - INFO - 开始更新价格和 mNAV 数据...
+2025-08-09 21:08:19,989 - INFO - 正在从 Finnhub 获取 SBET 价格...
+2025-08-09 21:08:20,742 - INFO - ✓ 从 Finnhub 获取 SBET 价格成功: $23.9200
+2025-08-09 21:08:20,742 - INFO -   价格变化: $0.5600 (2.40%)
+2025-08-09 21:08:22,747 - INFO - 正在从 Finnhub 获取 BMNR 价格...
+2025-08-09 21:08:23,303 - INFO - ✓ 从 Finnhub 获取 BMNR 价格成功: $51.4300
+2025-08-09 21:08:23,303 - INFO -   价格变化: $10.1500 (24.59%)
+2025-08-09 21:08:25,956 - INFO - 从 CoinGecko 获取 ETH 价格成功: $4195.08
+2025-08-09 21:08:25,957 - INFO - 24小时变化: 7.67%
+2025-08-09 21:08:25,957 - INFO - 市值: $506,543,245,319
+2025-08-09 21:08:25,957 - INFO - 24小时成交量: $43,368,353,597
+2025-08-09 21:08:25,960 - ERROR - 更新历史数据CSV文件时出错: name 'pd' is not defined
+2025-08-09 21:08:25,960 - INFO - 价格和 mNAV 数据更新完成
+2025-08-09 21:08:26,037 - WARNING -  * Debugger is active!
+2025-08-09 21:08:26,047 - INFO -  * Debugger PIN: 583-003-439
+2025-08-09 21:08:48,186 - INFO -  * Detected change in '/Users/charlotte/Documents/Code/sbet bmnr website/app.py', reloading
+2025-08-09 21:08:48,195 - INFO - Scheduler has been shut down
+2025-08-09 21:08:48,468 - INFO - 数据库初始化完成
+2025-08-09 21:08:48,471 - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2025-08-09 21:08:48,471 - INFO - Added job "MNAVTracker.update_prices_and_mnav" to job store "default"
+2025-08-09 21:08:48,471 - INFO - Scheduler started
+2025-08-09 21:08:48,472 - INFO - 开始更新价格和 mNAV 数据...
+2025-08-09 21:08:48,472 - INFO - 正在从 Finnhub 获取 SBET 价格...
+2025-08-09 21:08:49,234 - INFO - ✓ 从 Finnhub 获取 SBET 价格成功: $23.9200
+2025-08-09 21:08:49,234 - INFO -   价格变化: $0.5600 (2.40%)
+2025-08-09 21:08:51,239 - INFO - 正在从 Finnhub 获取 BMNR 价格...
+2025-08-09 21:08:51,813 - INFO - ✓ 从 Finnhub 获取 BMNR 价格成功: $51.4300
+2025-08-09 21:08:51,813 - INFO -   价格变化: $10.1500 (24.59%)
+2025-08-09 21:08:54,870 - INFO - 从 CoinGecko 获取 ETH 价格成功: $4195.08
+2025-08-09 21:08:54,870 - INFO - 24小时变化: 7.67%
+2025-08-09 21:08:54,870 - INFO - 市值: $506,543,245,319
+2025-08-09 21:08:54,870 - INFO - 24小时成交量: $43,368,353,597
+2025-08-09 21:08:54,874 - ERROR - 更新历史数据CSV文件时出错: name 'pd' is not defined
+2025-08-09 21:08:54,874 - INFO - 价格和 mNAV 数据更新完成
+2025-08-09 21:08:54,911 - WARNING -  * Debugger is active!
+2025-08-09 21:08:54,921 - INFO -  * Debugger PIN: 583-003-439
+2025-08-09 21:09:03,964 - INFO -  * Detected change in '/Users/charlotte/Documents/Code/sbet bmnr website/app.py', reloading
+2025-08-09 21:09:03,966 - INFO - Scheduler has been shut down
+2025-08-09 21:09:04,213 - INFO - 数据库初始化完成
+2025-08-09 21:09:04,216 - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2025-08-09 21:09:04,216 - INFO - Added job "MNAVTracker.update_prices_and_mnav" to job store "default"
+2025-08-09 21:09:04,216 - INFO - Scheduler started
+2025-08-09 21:09:04,217 - INFO - 开始更新价格和 mNAV 数据...
+2025-08-09 21:09:04,217 - INFO - 正在从 Finnhub 获取 SBET 价格...
+2025-08-09 21:09:04,995 - INFO - ✓ 从 Finnhub 获取 SBET 价格成功: $23.9200
+2025-08-09 21:09:04,995 - INFO -   价格变化: $0.5600 (2.40%)
+2025-08-09 21:09:07,000 - INFO - 正在从 Finnhub 获取 BMNR 价格...
+2025-08-09 21:09:07,380 - INFO - ✓ 从 Finnhub 获取 BMNR 价格成功: $51.4300
+2025-08-09 21:09:07,380 - INFO -   价格变化: $10.1500 (24.59%)
+2025-08-09 21:09:09,796 - INFO - 从 CoinGecko 获取 ETH 价格成功: $4195.08
+2025-08-09 21:09:09,796 - INFO - 24小时变化: 7.67%
+2025-08-09 21:09:09,796 - INFO - 市值: $506,543,245,319
+2025-08-09 21:09:09,796 - INFO - 24小时成交量: $43,368,353,597
+2025-08-09 21:09:09,799 - ERROR - 更新历史数据CSV文件时出错: name 'pd' is not defined
+2025-08-09 21:09:09,799 - INFO - 价格和 mNAV 数据更新完成
+2025-08-09 21:09:09,832 - WARNING -  * Debugger is active!
+2025-08-09 21:09:09,844 - INFO -  * Debugger PIN: 583-003-439
+2025-08-09 21:09:27,943 - INFO -  * Detected change in '/Users/charlotte/Documents/Code/sbet bmnr website/app.py', reloading
+2025-08-09 21:09:27,949 - INFO - Scheduler has been shut down
+2025-08-09 21:09:28,929 - INFO - 数据库初始化完成
+2025-08-09 21:09:28,932 - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2025-08-09 21:09:28,933 - INFO - Added job "MNAVTracker.update_prices_and_mnav" to job store "default"
+2025-08-09 21:09:28,933 - INFO - Scheduler started
+2025-08-09 21:09:28,933 - INFO - 开始更新价格和 mNAV 数据...
+2025-08-09 21:09:28,933 - INFO - 正在从 Finnhub 获取 SBET 价格...
+2025-08-09 21:09:29,994 - INFO - ✓ 从 Finnhub 获取 SBET 价格成功: $23.9200
+2025-08-09 21:09:29,994 - INFO -   价格变化: $0.5600 (2.40%)
+2025-08-09 21:09:32,000 - INFO - 正在从 Finnhub 获取 BMNR 价格...
+2025-08-09 21:09:32,388 - INFO - ✓ 从 Finnhub 获取 BMNR 价格成功: $51.4300
+2025-08-09 21:09:32,388 - INFO -   价格变化: $10.1500 (24.59%)
+2025-08-09 21:09:35,058 - INFO - 从 CoinGecko 获取 ETH 价格成功: $4193.64
+2025-08-09 21:09:35,059 - INFO - 24小时变化: 7.63%
+2025-08-09 21:09:35,059 - INFO - 市值: $506,543,245,319
+2025-08-09 21:09:35,059 - INFO - 24小时成交量: $43,382,237,251
+2025-08-09 21:09:35,062 - ERROR - 更新历史数据CSV文件时出错: name 'pd' is not defined
+2025-08-09 21:09:35,062 - INFO - 价格和 mNAV 数据更新完成
+2025-08-09 21:09:35,099 - WARNING -  * Debugger is active!
+2025-08-09 21:09:35,111 - INFO -  * Debugger PIN: 583-003-439
+2025-08-09 21:10:29,788 - INFO - 127.0.0.1 - - [09/Aug/2025 21:10:29] "GET /api/data HTTP/1.1" 200 -
+2025-08-09 21:15:29,782 - INFO - 127.0.0.1 - - [09/Aug/2025 21:15:29] "GET /api/data HTTP/1.1" 200 -
+2025-08-09 21:18:53,254 - INFO - 127.0.0.1 - - [09/Aug/2025 21:18:53] "GET /api/data HTTP/1.1" 200 -
+2025-08-09 21:22:30,814 - INFO - 127.0.0.1 - - [09/Aug/2025 21:22:30] "GET /api/data HTTP/1.1" 200 -
+2025-08-09 21:22:31,541 - INFO - 开始更新价格和 mNAV 数据...
+2025-08-09 21:22:31,541 - INFO - 正在从 Finnhub 获取 SBET 价格...
+2025-08-09 21:22:32,318 - INFO - ✓ 从 Finnhub 获取 SBET 价格成功: $23.9200
+2025-08-09 21:22:32,318 - INFO -   价格变化: $0.5600 (2.40%)
+2025-08-09 21:22:34,322 - INFO - 正在从 Finnhub 获取 BMNR 价格...
+2025-08-09 21:22:34,694 - INFO - ✓ 从 Finnhub 获取 BMNR 价格成功: $51.4300
+2025-08-09 21:22:34,694 - INFO -   价格变化: $10.1500 (24.59%)
+2025-08-09 21:22:37,333 - INFO - 从 CoinGecko 获取 ETH 价格成功: $4183.09
+2025-08-09 21:22:37,334 - INFO - 24小时变化: 7.23%
+2025-08-09 21:22:37,334 - INFO - 市值: $504,918,384,481
+2025-08-09 21:22:37,334 - INFO - 24小时成交量: $43,560,353,276
+2025-08-09 21:22:37,340 - ERROR - 更新历史数据CSV文件时出错: name 'pd' is not defined
+2025-08-09 21:22:37,341 - INFO - 价格和 mNAV 数据更新完成
+2025-08-09 21:22:37,341 - INFO - 127.0.0.1 - - [09/Aug/2025 21:22:37] "POST /api/manual_update HTTP/1.1" 200 -
+2025-08-09 21:22:37,356 - INFO - 127.0.0.1 - - [09/Aug/2025 21:22:37] "GET /api/data HTTP/1.1" 200 -
+2025-08-09 21:23:45,842 - INFO - 数据库初始化完成
+2025-08-09 21:23:45,844 - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2025-08-09 21:23:45,845 - INFO - Added job "MNAVTracker.update_prices_and_mnav" to job store "default"
+2025-08-09 21:23:45,845 - INFO - Scheduler started
+2025-08-09 21:23:45,845 - INFO - 开始更新价格和 mNAV 数据...
+2025-08-09 21:23:45,845 - INFO - 正在从 Finnhub 获取 SBET 价格...
+2025-08-09 21:23:46,597 - INFO - ✓ 从 Finnhub 获取 SBET 价格成功: $23.9200
+2025-08-09 21:23:46,597 - INFO -   价格变化: $0.5600 (2.40%)
+2025-08-09 21:23:48,602 - INFO - 正在从 Finnhub 获取 BMNR 价格...
+2025-08-09 21:23:49,001 - INFO - ✓ 从 Finnhub 获取 BMNR 价格成功: $51.4300
+2025-08-09 21:23:49,001 - INFO -   价格变化: $10.1500 (24.59%)
+2025-08-09 21:23:51,693 - INFO - 从 CoinGecko 获取 ETH 价格成功: $4183.34
+2025-08-09 21:23:51,693 - INFO - 24小时变化: 7.24%
+2025-08-09 21:23:51,693 - INFO - 市值: $504,918,384,481
+2025-08-09 21:23:51,693 - INFO - 24小时成交量: $43,367,888,541
+2025-08-09 21:23:51,695 - ERROR - 更新历史数据CSV文件时出错: name 'pd' is not defined
+2025-08-09 21:23:51,695 - INFO - 价格和 mNAV 数据更新完成
+2025-08-09 21:23:51,729 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://198.18.0.1:5001
+2025-08-09 21:23:51,729 - INFO - [33mPress CTRL+C to quit[0m
+2025-08-09 21:23:51,730 - INFO -  * Restarting with stat
+2025-08-09 21:23:51,855 - INFO - 数据库初始化完成
+2025-08-09 21:23:51,857 - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2025-08-09 21:23:51,857 - INFO - Added job "MNAVTracker.update_prices_and_mnav" to job store "default"
+2025-08-09 21:23:51,857 - INFO - Scheduler started
+2025-08-09 21:23:51,857 - INFO - 开始更新价格和 mNAV 数据...
+2025-08-09 21:23:51,858 - INFO - 正在从 Finnhub 获取 SBET 价格...
+2025-08-09 21:23:52,715 - INFO - ✓ 从 Finnhub 获取 SBET 价格成功: $23.9200
+2025-08-09 21:23:52,715 - INFO -   价格变化: $0.5600 (2.40%)
+2025-08-09 21:23:54,720 - INFO - 正在从 Finnhub 获取 BMNR 价格...
+2025-08-09 21:23:55,071 - INFO - ✓ 从 Finnhub 获取 BMNR 价格成功: $51.4300
+2025-08-09 21:23:55,072 - INFO -   价格变化: $10.1500 (24.59%)
+2025-08-09 21:23:57,534 - INFO - 从 CoinGecko 获取 ETH 价格成功: $4183.34
+2025-08-09 21:23:57,534 - INFO - 24小时变化: 7.24%
+2025-08-09 21:23:57,534 - INFO - 市值: $504,918,384,481
+2025-08-09 21:23:57,534 - INFO - 24小时成交量: $43,367,888,541
+2025-08-09 21:23:57,539 - ERROR - 更新历史数据CSV文件时出错: name 'pd' is not defined
+2025-08-09 21:23:57,539 - INFO - 价格和 mNAV 数据更新完成
+2025-08-09 21:23:57,565 - WARNING -  * Debugger is active!
+2025-08-09 21:23:57,573 - INFO -  * Debugger PIN: 583-003-439
+2025-08-09 21:24:07,931 - INFO - 127.0.0.1 - - [09/Aug/2025 21:24:07] "GET / HTTP/1.1" 200 -
+2025-08-09 21:24:07,974 - INFO - 127.0.0.1 - - [09/Aug/2025 21:24:07] "GET /static/js/main.js HTTP/1.1" 200 -
+2025-08-09 21:24:07,974 - INFO - 127.0.0.1 - - [09/Aug/2025 21:24:07] "GET /static/css/style.css HTTP/1.1" 200 -
+2025-08-09 21:24:09,859 - INFO - 127.0.0.1 - - [09/Aug/2025 21:24:09] "GET /api/data HTTP/1.1" 200 -
+2025-08-09 21:28:27,105 - INFO - 127.0.0.1 - - [09/Aug/2025 21:28:27] "GET /api/data HTTP/1.1" 200 -
+2025-08-09 21:28:28,615 - INFO - 开始更新价格和 mNAV 数据...
+2025-08-09 21:28:28,615 - INFO - 正在从 Finnhub 获取 SBET 价格...
+2025-08-09 21:28:28,626 - ERROR - Finnhub API 请求失败: HTTPSConnectionPool(host='finnhub.io', port=443): Max retries exceeded with url: /api/v1/quote?symbol=SBET&token=d2bjrs9r01qrj4im3kkgd2bjrs9r01qrj4im3kl0 (Caused by ProxyError('Unable to connect to proxy', NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x1029e5e20>: Failed to establish a new connection: [Errno 61] Connection refused')))
+2025-08-09 21:28:30,631 - INFO - 正在从 Finnhub 获取 BMNR 价格...
+2025-08-09 21:28:30,635 - ERROR - Finnhub API 请求失败: HTTPSConnectionPool(host='finnhub.io', port=443): Max retries exceeded with url: /api/v1/quote?symbol=BMNR&token=d2bjrs9r01qrj4im3kkgd2bjrs9r01qrj4im3kl0 (Caused by ProxyError('Unable to connect to proxy', NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x1029e6330>: Failed to establish a new connection: [Errno 61] Connection refused')))
+2025-08-09 21:28:32,648 - ERROR - CoinGecko API 请求失败: HTTPSConnectionPool(host='api.coingecko.com', port=443): Max retries exceeded with url: /api/v3/simple/price?ids=ethereum&vs_currencies=usd&include_24hr_change=true&include_24hr_vol=true&include_market_cap=true (Caused by ProxyError('Unable to connect to proxy', NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x1029e6180>: Failed to establish a new connection: [Errno 61] Connection refused')))
+2025-08-09 21:28:32,653 - ERROR - 更新历史数据CSV文件时出错: name 'pd' is not defined
+2025-08-09 21:28:32,653 - INFO - 价格和 mNAV 数据更新完成
+2025-08-09 21:28:32,654 - INFO - 127.0.0.1 - - [09/Aug/2025 21:28:32] "POST /api/manual_update HTTP/1.1" 200 -
+2025-08-09 21:28:32,664 - INFO - 127.0.0.1 - - [09/Aug/2025 21:28:32] "GET /api/data HTTP/1.1" 200 -
+2025-08-09 21:28:39,641 - INFO - 开始更新价格和 mNAV 数据...
+2025-08-09 21:28:39,641 - INFO - 正在从 Finnhub 获取 SBET 价格...
+2025-08-09 21:28:39,643 - ERROR - Finnhub API 请求失败: HTTPSConnectionPool(host='finnhub.io', port=443): Max retries exceeded with url: /api/v1/quote?symbol=SBET&token=d2bjrs9r01qrj4im3kkgd2bjrs9r01qrj4im3kl0 (Caused by ProxyError('Unable to connect to proxy', NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x102ad8d40>: Failed to establish a new connection: [Errno 61] Connection refused')))
+2025-08-09 21:28:41,649 - INFO - 正在从 Finnhub 获取 BMNR 价格...
+2025-08-09 21:28:41,654 - ERROR - Finnhub API 请求失败: HTTPSConnectionPool(host='finnhub.io', port=443): Max retries exceeded with url: /api/v1/quote?symbol=BMNR&token=d2bjrs9r01qrj4im3kkgd2bjrs9r01qrj4im3kl0 (Caused by ProxyError('Unable to connect to proxy', NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x102ad89b0>: Failed to establish a new connection: [Errno 61] Connection refused')))
+2025-08-09 21:28:43,659 - ERROR - CoinGecko API 请求失败: HTTPSConnectionPool(host='api.coingecko.com', port=443): Max retries exceeded with url: /api/v3/simple/price?ids=ethereum&vs_currencies=usd&include_24hr_change=true&include_24hr_vol=true&include_market_cap=true (Caused by ProxyError('Unable to connect to proxy', NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x102294500>: Failed to establish a new connection: [Errno 61] Connection refused')))
+2025-08-09 21:28:43,662 - ERROR - 更新历史数据CSV文件时出错: name 'pd' is not defined
+2025-08-09 21:28:43,662 - INFO - 价格和 mNAV 数据更新完成
+2025-08-09 21:28:43,662 - INFO - 127.0.0.1 - - [09/Aug/2025 21:28:43] "POST /api/manual_update HTTP/1.1" 200 -
+2025-08-09 21:28:43,673 - INFO - 127.0.0.1 - - [09/Aug/2025 21:28:43] "GET /api/data HTTP/1.1" 200 -
+2025-08-09 21:28:58,922 - INFO - 127.0.0.1 - - [09/Aug/2025 21:28:58] "GET /api/data HTTP/1.1" 200 -
+2025-08-09 21:29:10,934 - INFO - 127.0.0.1 - - [09/Aug/2025 21:29:10] "GET / HTTP/1.1" 200 -
+2025-08-09 21:29:10,951 - INFO - 127.0.0.1 - - [09/Aug/2025 21:29:10] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-08-09 21:29:10,954 - INFO - 127.0.0.1 - - [09/Aug/2025 21:29:10] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-08-09 21:29:11,570 - INFO - 127.0.0.1 - - [09/Aug/2025 21:29:11] "GET /api/data HTTP/1.1" 200 -
+2025-08-09 21:29:13,812 - INFO - 开始更新价格和 mNAV 数据...
+2025-08-09 21:29:13,813 - INFO - 正在从 Finnhub 获取 SBET 价格...
+2025-08-09 21:29:14,617 - INFO - ✓ 从 Finnhub 获取 SBET 价格成功: $23.9200
+2025-08-09 21:29:14,618 - INFO -   价格变化: $0.5600 (2.40%)
+2025-08-09 21:29:16,623 - INFO - 正在从 Finnhub 获取 BMNR 价格...
+2025-08-09 21:29:16,984 - INFO - ✓ 从 Finnhub 获取 BMNR 价格成功: $51.4300
+2025-08-09 21:29:16,984 - INFO -   价格变化: $10.1500 (24.59%)
+2025-08-09 21:29:19,460 - INFO - 从 CoinGecko 获取 ETH 价格成功: $4187.26
+2025-08-09 21:29:19,460 - INFO - 24小时变化: 7.06%
+2025-08-09 21:29:19,461 - INFO - 市值: $505,422,482,528
+2025-08-09 21:29:19,461 - INFO - 24小时成交量: $43,795,461,875
+2025-08-09 21:29:19,465 - ERROR - 更新历史数据CSV文件时出错: name 'pd' is not defined
+2025-08-09 21:29:19,465 - INFO - 价格和 mNAV 数据更新完成
+2025-08-09 21:29:19,466 - INFO - 127.0.0.1 - - [09/Aug/2025 21:29:19] "POST /api/manual_update HTTP/1.1" 200 -
+2025-08-09 21:29:19,476 - INFO - 127.0.0.1 - - [09/Aug/2025 21:29:19] "GET /api/data HTTP/1.1" 200 -
+2025-08-09 21:29:29,198 - INFO - 127.0.0.1 - - [09/Aug/2025 21:29:29] "GET /api/data HTTP/1.1" 200 -
+2025-08-09 21:41:35,360 - INFO - 127.0.0.1 - - [09/Aug/2025 21:41:35] "GET /api/data HTTP/1.1" 200 -
+2025-08-09 21:41:36,461 - INFO - 开始更新价格和 mNAV 数据...
+2025-08-09 21:41:36,461 - INFO - 正在从 Finnhub 获取 SBET 价格...
+2025-08-09 21:41:37,251 - INFO - ✓ 从 Finnhub 获取 SBET 价格成功: $23.9200
+2025-08-09 21:41:37,251 - INFO -   价格变化: $0.5600 (2.40%)
+2025-08-09 21:41:39,257 - INFO - 正在从 Finnhub 获取 BMNR 价格...
+2025-08-09 21:41:39,622 - INFO - ✓ 从 Finnhub 获取 BMNR 价格成功: $51.4300
+2025-08-09 21:41:39,623 - INFO -   价格变化: $10.1500 (24.59%)
+2025-08-09 21:41:42,347 - INFO - 从 CoinGecko 获取 ETH 价格成功: $4178.20
+2025-08-09 21:41:42,348 - INFO - 24小时变化: 6.61%
+2025-08-09 21:41:42,348 - INFO - 市值: $504,413,115,496
+2025-08-09 21:41:42,348 - INFO - 24小时成交量: $43,649,956,878
+2025-08-09 21:41:42,352 - ERROR - 更新历史数据CSV文件时出错: name 'pd' is not defined
+2025-08-09 21:41:42,352 - INFO - 价格和 mNAV 数据更新完成
+2025-08-09 21:41:42,353 - INFO - 127.0.0.1 - - [09/Aug/2025 21:41:42] "POST /api/manual_update HTTP/1.1" 200 -
+2025-08-09 21:41:42,360 - INFO - 127.0.0.1 - - [09/Aug/2025 21:41:42] "GET /api/data HTTP/1.1" 200 -
+2025-08-09 21:47:28,959 - INFO - 127.0.0.1 - - [09/Aug/2025 21:47:28] "GET /api/data HTTP/1.1" 200 -
+2025-08-09 21:47:30,983 - INFO - 开始更新价格和 mNAV 数据...
+2025-08-09 21:47:30,983 - INFO - 正在从 Finnhub 获取 SBET 价格...
+2025-08-09 21:47:31,863 - INFO - ✓ 从 Finnhub 获取 SBET 价格成功: $23.9200
+2025-08-09 21:47:31,863 - INFO -   价格变化: $0.5600 (2.40%)
+2025-08-09 21:47:33,865 - INFO - 正在从 Finnhub 获取 BMNR 价格...
+2025-08-09 21:47:34,242 - INFO - ✓ 从 Finnhub 获取 BMNR 价格成功: $51.4300
+2025-08-09 21:47:34,242 - INFO -   价格变化: $10.1500 (24.59%)
+2025-08-09 21:47:36,639 - INFO - 从 CoinGecko 获取 ETH 价格成功: $4179.97
+2025-08-09 21:47:36,640 - INFO - 24小时变化: 4.67%
+2025-08-09 21:47:36,640 - INFO - 市值: $504,560,677,945
+2025-08-09 21:47:36,640 - INFO - 24小时成交量: $43,243,361,436
+2025-08-09 21:47:36,646 - ERROR - 更新历史数据CSV文件时出错: name 'pd' is not defined
+2025-08-09 21:47:36,646 - INFO - 价格和 mNAV 数据更新完成
+2025-08-09 21:47:36,647 - INFO - 127.0.0.1 - - [09/Aug/2025 21:47:36] "POST /api/manual_update HTTP/1.1" 200 -
+2025-08-09 21:47:36,660 - INFO - 127.0.0.1 - - [09/Aug/2025 21:47:36] "GET /api/data HTTP/1.1" 200 -
+2025-08-09 21:47:47,817 - INFO -  * Detected change in '/Users/charlotte/Documents/Code/sbet bmnr website/api/app.py', reloading
+2025-08-09 21:47:47,820 - INFO - Scheduler has been shut down
+2025-08-09 21:47:47,856 - INFO -  * Restarting with stat
+2025-08-09 21:47:48,088 - INFO - 数据库初始化完成
+2025-08-09 21:47:48,095 - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2025-08-09 21:47:48,096 - INFO - Added job "MNAVTracker.update_prices_and_mnav" to job store "default"
+2025-08-09 21:47:48,096 - INFO - Scheduler started
+2025-08-09 21:47:48,097 - INFO - 开始更新价格和 mNAV 数据...
+2025-08-09 21:47:48,097 - INFO - 正在从 Finnhub 获取 SBET 价格...
+2025-08-09 21:47:48,853 - INFO - ✓ 从 Finnhub 获取 SBET 价格成功: $23.9200
+2025-08-09 21:47:48,853 - INFO -   价格变化: $0.5600 (2.40%)
+2025-08-09 21:47:50,858 - INFO - 正在从 Finnhub 获取 BMNR 价格...
+2025-08-09 21:47:51,375 - INFO - ✓ 从 Finnhub 获取 BMNR 价格成功: $51.4300
+2025-08-09 21:47:51,375 - INFO -   价格变化: $10.1500 (24.59%)
+2025-08-09 21:47:53,820 - INFO - 从 CoinGecko 获取 ETH 价格成功: $4179.97
+2025-08-09 21:47:53,820 - INFO - 24小时变化: 4.67%
+2025-08-09 21:47:53,821 - INFO - 市值: $504,560,677,945
+2025-08-09 21:47:53,821 - INFO - 24小时成交量: $43,243,361,436
+2025-08-09 21:47:53,822 - ERROR - 更新历史数据CSV文件时出错: name 'pd' is not defined
+2025-08-09 21:47:53,823 - INFO - 价格和 mNAV 数据更新完成
+2025-08-09 21:47:53,852 - WARNING -  * Debugger is active!
+2025-08-09 21:47:53,861 - INFO -  * Debugger PIN: 583-003-439
+2025-08-09 21:48:25,061 - INFO -  * Detected change in '/Users/charlotte/Documents/Code/sbet bmnr website/app.py', reloading
+2025-08-09 21:48:25,062 - INFO - Scheduler has been shut down
+2025-08-09 21:48:25,081 - INFO -  * Restarting with stat
+2025-08-09 21:48:25,272 - INFO - 数据库初始化完成
+2025-08-09 21:48:25,274 - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2025-08-09 21:48:25,274 - INFO - Added job "MNAVTracker.update_prices_and_mnav" to job store "default"
+2025-08-09 21:48:25,274 - INFO - Scheduler started
+2025-08-09 21:48:25,275 - INFO - 开始更新价格和 mNAV 数据...
+2025-08-09 21:48:25,275 - INFO - 正在从 Finnhub 获取 SBET 价格...
+2025-08-09 21:48:26,056 - INFO - ✓ 从 Finnhub 获取 SBET 价格成功: $23.9200
+2025-08-09 21:48:26,056 - INFO -   价格变化: $0.5600 (2.40%)
+2025-08-09 21:48:28,063 - INFO - 正在从 Finnhub 获取 BMNR 价格...
+2025-08-09 21:48:28,426 - INFO - ✓ 从 Finnhub 获取 BMNR 价格成功: $51.4300
+2025-08-09 21:48:28,426 - INFO -   价格变化: $10.1500 (24.59%)
+2025-08-09 21:48:30,870 - INFO - 从 CoinGecko 获取 ETH 价格成功: $4179.97
+2025-08-09 21:48:30,870 - INFO - 24小时变化: 4.67%
+2025-08-09 21:48:30,870 - INFO - 市值: $504,560,677,945
+2025-08-09 21:48:30,870 - INFO - 24小时成交量: $43,243,361,436
+2025-08-09 21:48:30,877 - ERROR - 更新历史数据CSV文件时出错: name 'pd' is not defined
+2025-08-09 21:48:30,877 - INFO - 价格和 mNAV 数据更新完成
+2025-08-09 21:48:30,912 - WARNING -  * Debugger is active!
+2025-08-09 21:48:30,921 - INFO -  * Debugger PIN: 583-003-439
+2025-08-09 21:48:58,124 - INFO -  * Detected change in '/Users/charlotte/Documents/Code/sbet bmnr website/app.py', reloading
+2025-08-09 21:48:58,126 - INFO - Scheduler has been shut down
+2025-08-09 21:48:58,146 - INFO -  * Restarting with stat
+2025-08-09 21:48:58,342 - INFO - 数据库初始化完成
+2025-08-09 21:48:58,344 - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2025-08-09 21:48:58,344 - INFO - Added job "MNAVTracker.update_prices_and_mnav" to job store "default"
+2025-08-09 21:48:58,344 - INFO - Scheduler started
+2025-08-09 21:48:58,345 - INFO - 开始更新价格和 mNAV 数据...
+2025-08-09 21:48:58,345 - INFO - 正在从 Finnhub 获取 SBET 价格...
+2025-08-09 21:48:59,441 - INFO - ✓ 从 Finnhub 获取 SBET 价格成功: $23.9200
+2025-08-09 21:48:59,441 - INFO -   价格变化: $0.5600 (2.40%)
+2025-08-09 21:49:01,442 - INFO - 正在从 Finnhub 获取 BMNR 价格...
+2025-08-09 21:49:01,827 - INFO - ✓ 从 Finnhub 获取 BMNR 价格成功: $51.4300
+2025-08-09 21:49:01,827 - INFO -   价格变化: $10.1500 (24.59%)
+2025-08-09 21:49:04,517 - INFO - 从 CoinGecko 获取 ETH 价格成功: $4179.08
+2025-08-09 21:49:04,517 - INFO - 24小时变化: 4.65%
+2025-08-09 21:49:04,517 - INFO - 市值: $504,560,677,945
+2025-08-09 21:49:04,518 - INFO - 24小时成交量: $43,279,003,655
+2025-08-09 21:49:04,520 - ERROR - 更新历史数据CSV文件时出错: name 'pd' is not defined
+2025-08-09 21:49:04,520 - INFO - 价格和 mNAV 数据更新完成
+2025-08-09 21:49:04,550 - WARNING -  * Debugger is active!
+2025-08-09 21:49:04,558 - INFO -  * Debugger PIN: 583-003-439
+2025-08-09 21:49:29,762 - INFO -  * Detected change in '/Users/charlotte/Documents/Code/sbet bmnr website/app.py', reloading
+2025-08-09 21:49:29,765 - INFO - Scheduler has been shut down
+2025-08-09 21:49:29,794 - INFO -  * Restarting with stat
+2025-08-09 21:49:29,958 - INFO - 数据库初始化完成
+2025-08-09 21:49:29,960 - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2025-08-09 21:49:29,960 - INFO - Added job "MNAVTracker.update_prices_and_mnav" to job store "default"
+2025-08-09 21:49:29,960 - INFO - Scheduler started
+2025-08-09 21:49:29,961 - INFO - 开始更新价格和 mNAV 数据...
+2025-08-09 21:49:29,961 - INFO - 正在从 Finnhub 获取 SBET 价格...
+2025-08-09 21:49:30,730 - INFO - ✓ 从 Finnhub 获取 SBET 价格成功: $23.9200
+2025-08-09 21:49:30,730 - INFO -   价格变化: $0.5600 (2.40%)
+2025-08-09 21:49:32,732 - INFO - 正在从 Finnhub 获取 BMNR 价格...
+2025-08-09 21:49:33,085 - INFO - ✓ 从 Finnhub 获取 BMNR 价格成功: $51.4300
+2025-08-09 21:49:33,085 - INFO -   价格变化: $10.1500 (24.59%)
+2025-08-09 21:49:35,516 - INFO - 从 CoinGecko 获取 ETH 价格成功: $4179.08
+2025-08-09 21:49:35,516 - INFO - 24小时变化: 4.65%
+2025-08-09 21:49:35,516 - INFO - 市值: $504,560,677,945
+2025-08-09 21:49:35,516 - INFO - 24小时成交量: $43,279,003,655
+2025-08-09 21:49:35,520 - ERROR - 更新历史数据CSV文件时出错: name 'pd' is not defined
+2025-08-09 21:49:35,520 - INFO - 价格和 mNAV 数据更新完成
+2025-08-09 21:49:35,554 - WARNING -  * Debugger is active!
+2025-08-09 21:49:35,560 - INFO -  * Debugger PIN: 583-003-439
+2025-08-09 21:49:40,600 - INFO -  * Detected change in '/Users/charlotte/Documents/Code/sbet bmnr website/app.py', reloading
+2025-08-09 21:49:40,603 - INFO - Scheduler has been shut down
+2025-08-09 21:49:40,653 - INFO -  * Restarting with stat
+2025-08-09 21:49:40,911 - INFO - 数据库初始化完成
+2025-08-09 21:49:40,938 - INFO - Scheduler has been shut down
