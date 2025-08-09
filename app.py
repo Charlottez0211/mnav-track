@@ -77,7 +77,8 @@ class MNAVTracker:
         
     def init_database(self):
         """初始化数据库表结构"""
-        with sqlite3.connect(self.get_db_path()) as conn:
+        try:
+            with sqlite3.connect(self.get_db_path()) as conn:
             cursor = conn.cursor()
             
             # 创建价格数据表
@@ -113,6 +114,9 @@ class MNAVTracker:
             
             conn.commit()
             logging.info("数据库初始化完成")
+        except Exception as e:
+            logging.error(f"数据库初始化失败: {str(e)}")
+            raise
     
     def get_stock_price(self, symbol):
         """使用 Finnhub API 获取股票价格"""
@@ -514,7 +518,16 @@ if os.getenv('VERCEL') != '1':  # 只在非Vercel环境启用调度器
 @app.route('/')
 def index():
     """主页面"""
-    return render_template('index.html')
+    try:
+        return render_template('index.html')
+    except Exception as e:
+        logging.error(f"首页渲染错误: {str(e)}")
+        return f"应用启动中，请稍后刷新页面。错误: {str(e)}", 500
+
+@app.route('/health')
+def health_check():
+    """健康检查端点"""
+    return {"status": "ok", "message": "应用运行正常"}
 
 @app.route('/api/data')
 def get_data():
@@ -667,13 +680,15 @@ def find_available_port(start_port=5000, max_port=5010):
 # Vercel部署支持
 import os
 
-# 初始化应用和追踪器
-if not hasattr(app, 'tracker_initialized'):
+# 初始化应用和追踪器 (仅在非Vercel环境)
+if not hasattr(app, 'tracker_initialized') and os.getenv('VERCEL') != '1':
     try:
         tracker.update_prices_and_mnav()
         app.tracker_initialized = True
     except Exception as e:
         logging.error(f"初始化数据更新失败: {str(e)}")
+        # Vercel环境中不要阻止启动
+        pass
 
 # 本地开发运行
 if __name__ == '__main__':
