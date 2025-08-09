@@ -67,9 +67,17 @@ class MNAVTracker:
             'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
         })
         
+    def get_db_path(self):
+        """获取数据库路径（Vercel兼容）"""
+        import os
+        if os.getenv('VERCEL') == '1':
+            return '/tmp/mnav_data.db'
+        else:
+            return 'mnav_data.db'
+        
     def init_database(self):
         """初始化数据库表结构"""
-        with sqlite3.connect('mnav_data.db') as conn:
+        with sqlite3.connect(self.get_db_path()) as conn:
             cursor = conn.cursor()
             
             # 创建价格数据表
@@ -228,7 +236,7 @@ class MNAVTracker:
                 config_data = self.get_config_from_db()
                 
                 # 存储价格数据
-                with sqlite3.connect('mnav_data.db') as conn:
+                with sqlite3.connect(self.get_db_path()) as conn:
                     cursor = conn.cursor()
                     cursor.execute('''
                         INSERT INTO price_data (sbet_price, bmnr_price, eth_price)
@@ -273,7 +281,7 @@ class MNAVTracker:
     def get_config_from_db(self):
         """从数据库获取配置信息"""
         try:
-            with sqlite3.connect('mnav_data.db') as conn:
+            with sqlite3.connect(self.get_db_path()) as conn:
                 cursor = conn.cursor()
                 cursor.execute('SELECT symbol, shares_outstanding, eth_holdings FROM stock_config')
                 rows = cursor.fetchall()
@@ -423,7 +431,7 @@ class MNAVTracker:
     def should_update_data(self):
         """检查是否需要更新数据（Vercel部署用）"""
         try:
-            with sqlite3.connect('mnav_data.db') as conn:
+            with sqlite3.connect(self.get_db_path()) as conn:
                 cursor = conn.cursor()
                 cursor.execute('''
                     SELECT timestamp FROM price_data
@@ -454,7 +462,7 @@ class MNAVTracker:
                 logging.info("Vercel环境：检测到数据需要更新，执行更新...")
                 self.update_prices_and_mnav()
             
-            with sqlite3.connect('mnav_data.db') as conn:
+            with sqlite3.connect(self.get_db_path()) as conn:
                 cursor = conn.cursor()
                 
                 # 获取最新价格数据
@@ -539,7 +547,7 @@ def update_config():
                 'error': '缺少必要参数'
             }), 400
         
-        with sqlite3.connect('mnav_data.db') as conn:
+        with sqlite3.connect(self.get_db_path()) as conn:
             cursor = conn.cursor()
             cursor.execute('''
                 INSERT OR REPLACE INTO stock_config (symbol, shares_outstanding, eth_holdings)
