@@ -297,7 +297,7 @@ body {
     font-size: 1.5rem;
     font-weight: 600;
     color: #333;
-    margin-bottom: 25px;
+    margin-bottom: 10px;
     display: flex;
     align-items: center;
     gap: 10px;
@@ -307,10 +307,18 @@ body {
     color: #667eea;
 }
 
+.config-description {
+    color: #666;
+    font-size: 0.95rem;
+    margin-bottom: 25px;
+    line-height: 1.5;
+}
+
 .config-cards {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 25px;
+    margin-bottom: 25px;
 }
 
 .config-card {
@@ -356,30 +364,89 @@ body {
     box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
 }
 
+.form-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
 .config-btn {
-    width: 100%;
-    background: linear-gradient(135deg, #667eea, #764ba2);
-    color: white;
-    border: none;
+    flex: 1;
     padding: 12px 20px;
     border-radius: 10px;
     cursor: pointer;
     font-weight: 600;
-    font-size: 1rem;
+    font-size: 0.9rem;
     transition: all 0.3s ease;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 8px;
+    border: none;
 }
 
-.config-btn:hover {
+.config-btn.primary {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+}
+
+.config-btn.primary:hover {
     transform: translateY(-2px);
     box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
 }
 
+.config-btn.secondary {
+    background: #6c757d;
+    color: white;
+}
+
+.config-btn.secondary:hover {
+    background: #5a6268;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(108, 117, 125, 0.4);
+}
+
 .config-btn:active {
     transform: translateY(0);
+}
+
+.config-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.config-status {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #f8f9fa;
+    padding: 20px 25px;
+    border-radius: 15px;
+    border: 1px solid #e9ecef;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.config-status .status-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.config-status .status-label {
+    font-weight: 600;
+    color: #555;
+    font-size: 0.9rem;
+}
+
+.config-status .status-value {
+    font-weight: 500;
+    padding: 5px 12px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    background: #e8f5e8;
+    color: #2e7d32;
 }
 
 /* 页脚 */

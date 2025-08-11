@@ -115,6 +115,7 @@
         <!-- 配置面板 -->
         <div class="config-section">
             <h3><i class="fas fa-cog"></i> 配置管理</h3>
+            <p class="config-description">调整股本数量和ETH持仓量，点击保存按钮将数据保存到本地</p>
             <div class="config-cards">
                 <div class="config-card">
                     <h4>SBET 配置</h4>
@@ -127,9 +128,14 @@
                             <label for="sbet-eth-input">ETH持仓量:</label>
                             <input type="number" id="sbet-eth-input" step="0.01" required>
                         </div>
-                        <button type="submit" class="config-btn">
-                            <i class="fas fa-save"></i> 更新 SBET
-                        </button>
+                        <div class="form-actions">
+                            <button type="submit" class="config-btn primary">
+                                <i class="fas fa-save"></i> 保存配置
+                            </button>
+                            <button type="button" class="config-btn secondary" onclick="resetSBETConfig()">
+                                <i class="fas fa-undo"></i> 重置
+                            </button>
+                        </div>
                     </form>
                 </div>
 
@@ -144,10 +150,27 @@
                             <label for="bmnr-eth-input">ETH持仓量:</label>
                             <input type="number" id="bmnr-eth-input" step="0.01" required>
                         </div>
-                        <button type="submit" class="config-btn">
-                            <i class="fas fa-save"></i> 更新 BMNR
-                        </button>
+                        <div class="form-actions">
+                            <button type="submit" class="config-btn primary">
+                                <i class="fas fa-save"></i> 保存配置
+                            </button>
+                            <button type="button" class="config-btn secondary" onclick="resetBMNRConfig()">
+                                <i class="fas fa-undo"></i> 重置
+                            </button>
+                        </div>
                     </form>
+                </div>
+            </div>
+            
+            <!-- 配置状态显示 -->
+            <div class="config-status">
+                <div class="status-item">
+                    <span class="status-label">配置状态:</span>
+                    <span id="config-status" class="status-value">已加载</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">最后保存:</span>
+                    <span id="last-save-time" class="status-value">--</span>
                 </div>
             </div>
         </div>
@@ -187,5 +210,20 @@
 
     <!-- JavaScript -->
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    
+    <!-- 重置配置函数 -->
+    <script>
+        function resetSBETConfig() {
+            if (window.mnavApp) {
+                window.mnavApp.resetConfig('SBET');
+            }
+        }
+        
+        function resetBMNRConfig() {
+            if (window.mnavApp) {
+                window.mnavApp.resetConfig('BMNR');
+            }
+        }
+    </script>
 </body>
 </html> 

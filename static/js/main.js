@@ -18,6 +18,7 @@ class MNAVApp {
         this.loadData();
         this.startAutoRefresh();
         this.showNotification('系统启动成功', 'success');
+        this.initializeConfigForms(); // 初始化配置表单
     }
 
     /**
@@ -225,7 +226,6 @@ class MNAVApp {
         event.preventDefault();
         
         const form = event.target;
-        const formData = new FormData(form);
         const sharesInput = form.querySelector(`#${symbol.toLowerCase()}-shares-input`);
         const ethInput = form.querySelector(`#${symbol.toLowerCase()}-eth-input`);
         const submitBtn = form.querySelector('button[type="submit"]');
@@ -241,7 +241,7 @@ class MNAVApp {
         // 添加加载状态
         submitBtn.disabled = true;
         const originalText = submitBtn.innerHTML;
-        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 更新中...';
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 保存中...';
 
         try {
             const response = await fetch('/api/update_config', {
@@ -259,19 +259,170 @@ class MNAVApp {
             const result = await response.json();
 
             if (result.success) {
-                this.showNotification(`${symbol} 配置更新成功`, 'success');
+                this.showNotification(`${symbol} 配置保存成功`, 'success');
+                
+                // 更新配置状态显示
+                this.updateConfigStatus('已保存', new Date().toLocaleString('zh-CN'));
+                
                 // 更新成功后刷新数据
                 await this.loadData();
+                
+                // 保存到本地存储作为备份
+                this.saveToLocalStorage(symbol, shares, ethHoldings);
             } else {
-                throw new Error(result.error || '配置更新失败');
+                throw new Error(result.error || '配置保存失败');
             }
         } catch (error) {
-            console.error('配置更新失败:', error);
-            this.showNotification(`配置更新失败: ${error.message}`, 'error');
+            console.error('配置保存失败:', error);
+            this.showNotification(`配置保存失败: ${error.message}`, 'error');
         } finally {
             // 恢复按钮状态
             submitBtn.disabled = false;
             submitBtn.innerHTML = originalText;
+        }
+    }
+
+    /**
+     * 保存配置到本地存储
+     */
+    saveToLocalStorage(symbol, shares, ethHoldings) {
+        try {
+            const config = {
+                symbol: symbol,
+                shares_outstanding: shares,
+                eth_holdings: ethHoldings,
+                timestamp: new Date().toISOString()
+            };
+            
+            localStorage.setItem(`mnav_config_${symbol}`, JSON.stringify(config));
+            console.log(`${symbol} 配置已保存到本地存储`);
+        } catch (error) {
+            console.error('保存到本地存储失败:', error);
+        }
+    }
+
+    /**
+     * 从本地存储加载配置
+     */
+    loadFromLocalStorage(symbol) {
+        try {
+            const stored = localStorage.getItem(`mnav_config_${symbol}`);
+            if (stored) {
+                const config = JSON.parse(stored);
+                console.log(`从本地存储加载 ${symbol} 配置:`, config);
+                return config;
+            }
+        } catch (error) {
+            console.error('从本地存储加载配置失败:', error);
+        }
+        return null;
+    }
+
+    /**
+     * 重置配置到默认值
+     */
+    resetConfig(symbol) {
+        const defaultConfig = {
+            'SBET': { shares: 129038060.0, eth: 521939.0 },
+            'BMNR': { shares: 121700000.0, eth: 833137.0 }
+        };
+        
+        const config = defaultConfig[symbol];
+        if (config) {
+            const sharesInput = document.getElementById(`${symbol.toLowerCase()}-shares-input`);
+            const ethInput = document.getElementById(`${symbol.toLowerCase()}-eth-input`);
+            
+            if (sharesInput && ethInput) {
+                sharesInput.value = config.shares;
+                ethInput.value = config.eth;
+                
+                this.showNotification(`${symbol} 配置已重置为默认值`, 'info');
+                
+                // 自动保存重置后的配置
+                this.autoSaveConfig(symbol, config.shares, config.eth);
+            }
+        }
+    }
+
+    /**
+     * 自动保存配置（用于重置后）
+     */
+    async autoSaveConfig(symbol, shares, ethHoldings) {
+        try {
+            const response = await fetch('/api/update_config', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    symbol: symbol,
+                    shares_outstanding: shares,
+                    eth_holdings: ethHoldings
+                })
+            });
+
+            const result = await response.json();
+            
+            if (result.success) {
+                this.showNotification(`${symbol} 默认配置已自动保存`, 'success');
+                this.updateConfigStatus('已重置并保存', new Date().toLocaleString('zh-CN'));
+                
+                // 刷新数据
+                await this.loadData();
+            }
+        } catch (error) {
+            console.error('自动保存配置失败:', error);
+        }
+    }
+
+    /**
+     * 更新配置状态显示
+     */
+    updateConfigStatus(status, lastSaveTime) {
+        const statusElement = document.getElementById('config-status');
+        const lastSaveElement = document.getElementById('last-save-time');
+        
+        if (statusElement) {
+            statusElement.textContent = status;
+        }
+        
+        if (lastSaveElement && lastSaveTime) {
+            lastSaveElement.textContent = lastSaveTime;
+        }
+    }
+
+    /**
+     * 初始化配置表单
+     */
+    initializeConfigForms() {
+        // 为每个配置表单添加重置功能
+        const sbetForm = document.getElementById('sbet-config-form');
+        const bmnrForm = document.getElementById('bmnr-config-form');
+        
+        if (sbetForm) {
+            // 检查是否有本地存储的配置
+            const sbetLocalConfig = this.loadFromLocalStorage('SBET');
+            if (sbetLocalConfig) {
+                const sharesInput = document.getElementById('sbet-shares-input');
+                const ethInput = document.getElementById('sbet-eth-input');
+                if (sharesInput && ethInput) {
+                    sharesInput.value = sbetLocalConfig.shares_outstanding;
+                    ethInput.value = sbetLocalConfig.eth_holdings;
+                }
+            }
+        }
+        
+        if (bmnrForm) {
+            // 检查是否有本地存储的配置
+            const bmnrLocalConfig = this.loadFromLocalStorage('BMNR');
+            if (bmnrLocalConfig) {
+                const sharesInput = document.getElementById('bmnr-shares-input');
+                const ethInput = document.getElementById('bmnr-eth-input');
+                if (sharesInput && ethInput) {
+                    sharesInput.value = bmnrLocalConfig.shares_outstanding;
+                    ethInput.value = bmnrLocalConfig.eth_holdings;
+                }
+            }
         }
     }
 

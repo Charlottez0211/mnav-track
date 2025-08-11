@@ -5,6 +5,7 @@ SBET 和 BMNR mNAV 实时追踪网页应用 - Vercel版本
 2. 计算 mNAV 数据
 3. 提供 Web 界面显示
 4. 适配Vercel无服务器环境
+5. 支持配置数据持久化保存
 """
 
 from flask import Flask, render_template, jsonify, request
@@ -30,8 +31,11 @@ app = Flask(__name__)
 # Finnhub API 配置
 FINNHUB_API_KEY = "d2bjrs9r01qrj4im3kkgd2bjrs9r01qrj4im3kl0"
 
-# 股票配置数据 - 使用内存存储
-STOCK_CONFIG = {
+# 配置文件路径
+CONFIG_FILE = 'user_config.json'
+
+# 默认股票配置数据
+DEFAULT_STOCK_CONFIG = {
     'SBET': {
         'shares_outstanding': 129038060.0,  # 默认股本数量
         'eth_holdings': 521939.0,           # 默认ETH持仓量
@@ -44,12 +48,62 @@ STOCK_CONFIG = {
     }
 }
 
+# 数据持久化存储类
+class PersistentStorage:
+    def __init__(self):
+        self.config_file = CONFIG_FILE
+        self.config_data = self.load_config()
+        
+    def load_config(self):
+        """从JSON文件加载配置数据"""
+        try:
+            if os.path.exists(self.config_file):
+                with open(self.config_file, 'r', encoding='utf-8') as f:
+                    loaded_config = json.load(f)
+                    logging.info(f"成功从 {self.config_file} 加载配置数据")
+                    return loaded_config
+            else:
+                logging.info(f"配置文件 {self.config_file} 不存在，使用默认配置")
+                return DEFAULT_STOCK_CONFIG.copy()
+        except Exception as e:
+            logging.error(f"加载配置文件失败: {str(e)}，使用默认配置")
+            return DEFAULT_STOCK_CONFIG.copy()
+    
+    def save_config(self):
+        """保存配置数据到JSON文件"""
+        try:
+            with open(self.config_file, 'w', encoding='utf-8') as f:
+                json.dump(self.config_data, f, ensure_ascii=False, indent=2)
+            logging.info(f"配置数据已保存到 {self.config_file}")
+            return True
+        except Exception as e:
+            logging.error(f"保存配置文件失败: {str(e)}")
+            return False
+    
+    def update_config(self, symbol, shares_outstanding, eth_holdings):
+        """更新配置数据并保存到文件"""
+        if symbol in self.config_data:
+            self.config_data[symbol]['shares_outstanding'] = shares_outstanding
+            self.config_data[symbol]['eth_holdings'] = eth_holdings
+            
+            # 保存到文件
+            if self.save_config():
+                logging.info(f"配置更新并保存成功: {symbol} - 股本: {shares_outstanding}, ETH持仓: {eth_holdings}")
+                return True
+            else:
+                logging.error(f"配置更新成功但保存失败: {symbol}")
+                return False
+        return False
+    
+    def get_config(self):
+        """获取当前配置数据"""
+        return self.config_data.copy()
+
 # 内存数据存储 - 替代SQLite数据库
 class MemoryStorage:
     def __init__(self):
         self.price_data = []
         self.mnav_data = []
-        self.config_data = STOCK_CONFIG.copy()
         
     def add_price_data(self, sbet_price, bmnr_price, eth_price):
         """添加价格数据"""
@@ -89,17 +143,10 @@ class MemoryStorage:
             latest = self.mnav_data[-1]
             return (latest['timestamp'], latest['sbet_mnav'], latest['bmnr_mnav'])
         return None
-    
-    def update_config(self, symbol, shares_outstanding, eth_holdings):
-        """更新配置数据"""
-        if symbol in self.config_data:
-            self.config_data[symbol]['shares_outstanding'] = shares_outstanding
-            self.config_data[symbol]['eth_holdings'] = eth_holdings
-            return True
-        return False
 
 # 创建全局存储实例
-storage = MemoryStorage()
+persistent_storage = PersistentStorage()
+memory_storage = MemoryStorage()
 
 class MNAVTracker:
     def __init__(self):
@@ -231,10 +278,10 @@ class MNAVTracker:
                 eth_price = self.get_eth_price()
                 
                 # 获取配置数据
-                config_data = storage.config_data
+                config_data = persistent_storage.get_config()
                 
                 # 存储价格数据到内存
-                storage.add_price_data(sbet_price, bmnr_price, eth_price)
+                memory_storage.add_price_data(sbet_price, bmnr_price, eth_price)
                 
                 # 计算和存储 mNAV
                 sbet_mnav = None
@@ -257,7 +304,7 @@ class MNAVTracker:
                     )
                 
                 # 存储mNAV数据到内存
-                storage.add_mnav_data(sbet_mnav, bmnr_mnav)
+                memory_storage.add_mnav_data(sbet_mnav, bmnr_mnav)
                 
                 logging.info("价格和 mNAV 数据更新完成")
                 
@@ -268,9 +315,9 @@ class MNAVTracker:
         """获取最新的价格和 mNAV 数据"""
         try:
             return {
-                'price_data': storage.get_latest_price_data(),
-                'mnav_data': storage.get_latest_mnav_data(),
-                'config': storage.config_data
+                'price_data': memory_storage.get_latest_price_data(),
+                'mnav_data': memory_storage.get_latest_mnav_data(),
+                'config': persistent_storage.get_config()
             }
         except Exception as e:
             logging.error(f"获取最新数据时出错: {str(e)}")
@@ -318,15 +365,16 @@ def update_config():
                 'error': '缺少必要参数'
             }), 400
         
-        # 更新内存中的配置
-        success = storage.update_config(symbol, float(shares_outstanding), float(eth_holdings))
+        # 更新配置并保存到文件
+        success = persistent_storage.update_config(symbol, float(shares_outstanding), float(eth_holdings))
         
         if success:
             logging.info(f"配置更新成功: {symbol} - 股本: {shares_outstanding}, ETH持仓: {eth_holdings}")
             
             return jsonify({
                 'success': True,
-                'message': f'{symbol} 配置更新成功'
+                'message': f'{symbol} 配置更新成功',
+                'config': persistent_storage.get_config()
             })
         else:
             return jsonify({
