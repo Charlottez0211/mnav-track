@@ -273,7 +273,9 @@ class MNAVApp {
                 this.showNotification(`${symbol} 配置保存成功，mNAV已重新计算`, 'success');
                 
                 // 更新配置状态显示
-                this.updateConfigStatus('已保存并重新计算', new Date().toLocaleString('zh-CN'));
+                const currentTime = new Date().toISOString();
+                const localTime = this.formatLocalTime(currentTime);
+                this.updateConfigStatus('已保存并重新计算', localTime);
                 
                 // 立即更新界面显示最新的数据
                 if (result.latest_data) {
@@ -418,7 +420,11 @@ class MNAVApp {
             
             if (result.success) {
                 this.showNotification(`${symbol} 默认配置已自动保存`, 'success');
-                this.updateConfigStatus('已重置并保存', new Date().toLocaleString('zh-CN'));
+                
+                // 更新配置状态显示
+                const currentTime = new Date().toISOString();
+                const localTime = this.formatLocalTime(currentTime);
+                this.updateConfigStatus('已重置并保存', localTime);
                 
                 // 刷新数据
                 await this.loadData();
@@ -621,7 +627,10 @@ class MNAVApp {
             
             if (result.success) {
                 console.log('当前配置状态:', result);
-                this.updateConfigStatus('已加载', result.timestamp);
+                
+                // 将UTC时间转换为本地时间显示
+                const localTime = this.formatLocalTime(result.timestamp);
+                this.updateConfigStatus('已加载', localTime);
                 
                 // 更新配置表单的当前值
                 this.updateConfigFormValues(result.config);
@@ -634,6 +643,70 @@ class MNAVApp {
         } catch (error) {
             console.error('检查配置状态时出错:', error);
             return null;
+        }
+    }
+
+    /**
+     * 将UTC时间转换为本地时间显示
+     */
+    formatLocalTime(utcTimestamp) {
+        try {
+            // 解析UTC时间戳
+            const utcDate = new Date(utcTimestamp);
+            
+            // 检查是否为有效日期
+            if (isNaN(utcDate.getTime())) {
+                throw new Error('无效的时间戳');
+            }
+            
+            // 获取当前时区偏移量（分钟）
+            const timezoneOffset = new Date().getTimezoneOffset();
+            
+            // 转换为本地时间
+            const localDate = new Date(utcDate.getTime() - (timezoneOffset * 60 * 1000));
+            
+            // 格式化为易读的本地时间字符串
+            const year = localDate.getFullYear();
+            const month = String(localDate.getMonth() + 1).padStart(2, '0');
+            const day = String(localDate.getDate()).padStart(2, '0');
+            const hours = String(localDate.getHours()).padStart(2, '0');
+            const minutes = String(localDate.getMinutes()).padStart(2, '0');
+            const seconds = String(localDate.getSeconds()).padStart(2, '0');
+            
+            // 获取时区信息
+            const timezone = this.getTimezoneInfo();
+            
+            return `${year}-${month}-${day} ${hours}:${minutes}:${seconds} ${timezone}`;
+        } catch (error) {
+            console.error('时间转换失败:', error);
+            // 如果转换失败，返回原始时间戳
+            return utcTimestamp;
+        }
+    }
+
+    /**
+     * 获取时区信息
+     */
+    getTimezoneInfo() {
+        try {
+            const now = new Date();
+            const timezoneOffset = now.getTimezoneOffset();
+            const timezoneHours = Math.abs(Math.floor(timezoneOffset / 60));
+            const timezoneMinutes = Math.abs(timezoneOffset % 60);
+            
+            let timezoneString = '';
+            if (timezoneOffset <= 0) {
+                // 东半球（UTC+）
+                timezoneString = `(UTC+${timezoneHours.toString().padStart(2, '0')}:${timezoneMinutes.toString().padStart(2, '0')})`;
+            } else {
+                // 西半球（UTC-）
+                timezoneString = `(UTC-${timezoneHours.toString().padStart(2, '0')}:${timezoneMinutes.toString().padStart(2, '0')})`;
+            }
+            
+            return timezoneString;
+        } catch (error) {
+            console.error('获取时区信息失败:', error);
+            return '(本地时间)';
         }
     }
 
