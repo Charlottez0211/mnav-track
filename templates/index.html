@@ -117,15 +117,6 @@
                             <span class="sub-label">SBET mNAV</span>
                             <span id="ratio-sbet-mnav" class="sub-value">--</span>
                         </div>
-                        <div class="sub-metric">
-                            <span class="sub-label">比值变化</span>
-                            <span id="ratio-change" class="sub-value">--</span>
-                        </div>
-                    </div>
-                    <div class="ratio-actions">
-                        <button class="ratio-reset-btn" onclick="resetRatioHistory()">
-                            <i class="fas fa-undo"></i> 重置历史
-                        </button>
                     </div>
                 </div>
             </div>
@@ -264,12 +255,6 @@
         function checkConfigStatus() {
             if (window.mnavApp) {
                 window.mnavApp.checkConfigStatus();
-            }
-        }
-        
-        function resetRatioHistory() {
-            if (window.mnavApp) {
-                window.mnavApp.resetRatioHistory();
             }
         }
     </script>

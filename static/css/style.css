@@ -314,49 +314,6 @@ body {
     background: rgba(255, 255, 255, 0.2);
 }
 
-.ratio-actions {
-    margin-top: 20px;
-    text-align: center;
-}
-
-.ratio-reset-btn {
-    background: rgba(255, 255, 255, 0.2);
-    color: white;
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    padding: 8px 16px;
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: 500;
-    font-size: 0.85rem;
-    transition: all 0.3s ease;
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-}
-
-.ratio-reset-btn:hover {
-    background: rgba(255, 255, 255, 0.3);
-    border-color: rgba(255, 255, 255, 0.5);
-    transform: translateY(-1px);
-}
-
-.ratio-reset-btn:active {
-    transform: translateY(0);
-}
-
-/* 比值变化指示器样式 */
-.ratio-change-positive {
-    color: #28a745 !important;
-}
-
-.ratio-change-negative {
-    color: #dc3545 !important;
-}
-
-.ratio-change-neutral {
-    color: #6c757d !important;
-}
-
 /* 配置区域 */
 .config-section {
     background: white;
