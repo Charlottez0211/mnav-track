@@ -95,6 +95,41 @@
                 </div>
             </div>
 
+            <!-- mNAV比值卡片 -->
+            <div class="card ratio-card">
+                <div class="card-header">
+                    <h3><i class="fas fa-balance-scale"></i> mNAV比值</h3>
+                    <div class="card-status" id="ratio-status">
+                        <i class="fas fa-circle"></i>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <div class="main-metric">
+                        <span class="metric-label">BMNR/SBET</span>
+                        <span id="mnav-ratio" class="metric-value">--</span>
+                    </div>
+                    <div class="sub-metrics">
+                        <div class="sub-metric">
+                            <span class="sub-label">BMNR mNAV</span>
+                            <span id="ratio-bmnr-mnav" class="sub-value">--</span>
+                        </div>
+                        <div class="sub-metric">
+                            <span class="sub-label">SBET mNAV</span>
+                            <span id="ratio-sbet-mnav" class="sub-value">--</span>
+                        </div>
+                        <div class="sub-metric">
+                            <span class="sub-label">比值变化</span>
+                            <span id="ratio-change" class="sub-value">--</span>
+                        </div>
+                    </div>
+                    <div class="ratio-actions">
+                        <button class="ratio-reset-btn" onclick="resetRatioHistory()">
+                            <i class="fas fa-undo"></i> 重置历史
+                        </button>
+                    </div>
+                </div>
+            </div>
+
             <!-- ETH 价格卡片 -->
             <div class="card eth-card">
                 <div class="card-header">
@@ -229,6 +264,12 @@
         function checkConfigStatus() {
             if (window.mnavApp) {
                 window.mnavApp.checkConfigStatus();
+            }
+        }
+        
+        function resetRatioHistory() {
+            if (window.mnavApp) {
+                window.mnavApp.resetRatioHistory();
             }
         }
     </script>

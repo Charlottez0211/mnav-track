@@ -110,6 +110,9 @@ class MNAVApp {
             
             this.updateElement('sbet-mnav', sbetMNAV ? sbetMNAV.toFixed(6) : '--');
             this.updateElement('bmnr-mnav', bmnrMNAV ? bmnrMNAV.toFixed(6) : '--');
+            
+            // 计算并更新mNAV比值
+            this.updateMNAVRatio(sbetMNAV, bmnrMNAV);
         }
 
         // 更新配置信息
@@ -279,6 +282,15 @@ class MNAVApp {
                 if (result.latest_data) {
                     this.updateUI(result.latest_data);
                     console.log(`${symbol} 配置更新后的最新数据:`, result.latest_data);
+                    
+                    // 如果更新了配置，重新计算比值
+                    if (result.latest_data.mnav_data) {
+                        const [timestamp, sbetMNAV, bmnrMNAV] = result.latest_data.mnav_data;
+                        if (sbetMNAV && bmnrMNAV) {
+                            this.updateMNAVRatio(sbetMNAV, bmnrMNAV);
+                            console.log('配置更新后比值已重新计算');
+                        }
+                    }
                 } else {
                     // 如果没有最新数据，则重新加载
                     await this.loadData();
@@ -771,6 +783,144 @@ class MNAVApp {
                 bmnrEthInput.value = config.BMNR.eth_holdings;
                 console.log('BMNR配置表单已更新:', config.BMNR);
             }
+        }
+    }
+
+    /**
+     * 更新mNAV比值显示
+     */
+    updateMNAVRatio(sbetMNAV, bmnrMNAV) {
+        if (sbetMNAV && bmnrMNAV && sbetMNAV > 0) {
+            // 计算比值：BMNR mNAV / SBET mNAV
+            const ratio = bmnrMNAV / sbetMNAV;
+            
+            // 更新比值显示
+            this.updateElement('mnav-ratio', ratio.toFixed(6));
+            
+            // 更新比值卡片中的mNAV值
+            this.updateElement('ratio-bmnr-mnav', bmnrMNAV.toFixed(6));
+            this.updateElement('ratio-sbet-mnav', sbetMNAV.toFixed(6));
+            
+            // 计算比值变化（与历史值比较）
+            this.calculateRatioChange(ratio);
+            
+            // 更新比值状态指示器
+            this.updateCardStatus('ratio-status', true);
+            
+            console.log(`mNAV比值已更新: BMNR/SBET = ${ratio.toFixed(6)}`);
+        } else {
+            // 如果没有有效的mNAV数据，显示占位符
+            this.updateElement('mnav-ratio', '--');
+            this.updateElement('ratio-bmnr-mnav', '--');
+            this.updateElement('ratio-sbet-mnav', '--');
+            this.updateElement('ratio-change', '--');
+            
+            // 更新比值状态指示器
+            this.updateCardStatus('ratio-status', false);
+        }
+    }
+
+    /**
+     * 计算比值变化
+     */
+    calculateRatioChange(currentRatio) {
+        // 获取历史比值（从本地存储）
+        const lastRatio = this.getLastRatio();
+        
+        if (lastRatio && lastRatio > 0) {
+            const change = currentRatio - lastRatio;
+            const changePercent = (change / lastRatio) * 100;
+            
+            let changeText = '';
+            let changeClass = '';
+            
+            if (change > 0) {
+                changeText = `+${change.toFixed(6)} (+${changePercent.toFixed(2)}%)`;
+                changeClass = 'ratio-change-positive';
+            } else if (change < 0) {
+                changeText = `${change.toFixed(6)} (${changePercent.toFixed(2)}%)`;
+                changeClass = 'ratio-change-negative';
+            } else {
+                changeText = '0.000000 (0.00%)';
+                changeClass = 'ratio-change-neutral';
+            }
+            
+            // 更新比值变化显示
+            this.updateElement('ratio-change', changeText);
+            
+            // 应用样式类
+            const ratioChangeElement = document.getElementById('ratio-change');
+            if (ratioChangeElement) {
+                ratioChangeElement.className = `sub-value ${changeClass}`;
+            }
+            
+            console.log(`比值变化: ${changeText}`);
+        } else {
+            // 首次计算，显示无变化
+            this.updateElement('ratio-change', '首次计算');
+            
+            const ratioChangeElement = document.getElementById('ratio-change');
+            if (ratioChangeElement) {
+                ratioChangeElement.className = 'sub-value ratio-change-neutral';
+            }
+        }
+        
+        // 保存当前比值到本地存储
+        this.saveCurrentRatio(currentRatio);
+    }
+
+    /**
+     * 获取历史比值
+     */
+    getLastRatio() {
+        try {
+            const stored = localStorage.getItem('mnav_ratio_history');
+            if (stored) {
+                const data = JSON.parse(stored);
+                return data.ratio || null;
+            }
+        } catch (error) {
+            console.error('获取历史比值失败:', error);
+        }
+        return null;
+    }
+
+    /**
+     * 保存当前比值
+     */
+    saveCurrentRatio(ratio) {
+        try {
+            const data = {
+                ratio: ratio,
+                timestamp: new Date().toISOString()
+            };
+            localStorage.setItem('mnav_ratio_history', JSON.stringify(data));
+        } catch (error) {
+            console.error('保存比值历史失败:', error);
+        }
+    }
+
+    /**
+     * 重置比值历史
+     */
+    resetRatioHistory() {
+        try {
+            localStorage.removeItem('mnav_ratio_history');
+            console.log('比值历史已重置');
+            
+            // 更新比值变化显示
+            this.updateElement('ratio-change', '历史已重置');
+            
+            // 应用样式类
+            const ratioChangeElement = document.getElementById('ratio-change');
+            if (ratioChangeElement) {
+                ratioChangeElement.className = 'sub-value ratio-change-neutral';
+            }
+            
+            this.showNotification('比值历史已重置', 'info');
+        } catch (error) {
+            console.error('重置比值历史失败:', error);
+            this.showNotification('重置比值历史失败', 'error');
         }
     }
 }
