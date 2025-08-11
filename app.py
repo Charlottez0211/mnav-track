@@ -48,15 +48,21 @@ DEFAULT_STOCK_CONFIG = {
     }
 }
 
-# 数据持久化存储类
+# 数据持久化存储类 - Vercel环境优化版本
 class PersistentStorage:
     def __init__(self):
         self.config_file = CONFIG_FILE
         self.config_data = self.load_config()
         
     def load_config(self):
-        """从JSON文件加载配置数据"""
+        """从JSON文件加载配置数据，Vercel环境优先使用内存存储"""
         try:
+            # 在Vercel环境中，文件系统是只读的，所以优先使用默认配置
+            if os.environ.get('VERCEL_ENV'):
+                logging.info("检测到Vercel环境，使用默认配置")
+                return DEFAULT_STOCK_CONFIG.copy()
+            
+            # 本地开发环境尝试加载文件
             if os.path.exists(self.config_file):
                 with open(self.config_file, 'r', encoding='utf-8') as f:
                     loaded_config = json.load(f)
@@ -70,8 +76,14 @@ class PersistentStorage:
             return DEFAULT_STOCK_CONFIG.copy()
     
     def save_config(self):
-        """保存配置数据到JSON文件"""
+        """保存配置数据，Vercel环境使用内存存储"""
         try:
+            # 在Vercel环境中，文件系统是只读的，所以只保存到内存
+            if os.environ.get('VERCEL_ENV'):
+                logging.info("Vercel环境：配置已保存到内存")
+                return True
+            
+            # 本地开发环境保存到文件
             with open(self.config_file, 'w', encoding='utf-8') as f:
                 json.dump(self.config_data, f, ensure_ascii=False, indent=2)
             logging.info(f"配置数据已保存到 {self.config_file}")
@@ -81,17 +93,17 @@ class PersistentStorage:
             return False
     
     def update_config(self, symbol, shares_outstanding, eth_holdings):
-        """更新配置数据并保存到文件"""
+        """更新配置数据并保存"""
         if symbol in self.config_data:
             self.config_data[symbol]['shares_outstanding'] = shares_outstanding
             self.config_data[symbol]['eth_holdings'] = eth_holdings
             
-            # 保存到文件
+            # 保存配置（Vercel环境只保存到内存）
             if self.save_config():
-                logging.info(f"配置更新并保存成功: {symbol} - 股本: {shares_outstanding}, ETH持仓: {eth_holdings}")
+                logging.info(f"配置更新成功: {symbol} - 股本: {shares_outstanding}, ETH持仓: {eth_holdings}")
                 return True
             else:
-                logging.error(f"配置更新成功但保存失败: {symbol}")
+                logging.error(f"配置更新失败: {symbol}")
                 return False
         return False
     

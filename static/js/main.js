@@ -63,6 +63,12 @@ class MNAVApp {
                 this.updateUI(result.data);
                 this.updateSystemStatus('online', '系统正常');
                 this.updateLastUpdateTime();
+                
+                // 调试信息：显示当前配置
+                if (result.data.config) {
+                    console.log('当前加载的配置数据:', result.data.config);
+                    this.updateConfigStatus('已加载', '--');
+                }
             } else {
                 throw new Error(result.error || '数据格式错误');
             }
@@ -269,12 +275,20 @@ class MNAVApp {
                 
                 // 保存到本地存储作为备份
                 this.saveToLocalStorage(symbol, shares, ethHoldings);
+                
+                // 显示当前配置信息
+                console.log(`${symbol} 配置已更新:`, result.config);
             } else {
                 throw new Error(result.error || '配置保存失败');
             }
         } catch (error) {
             console.error('配置保存失败:', error);
             this.showNotification(`配置保存失败: ${error.message}`, 'error');
+            
+            // 显示详细的错误信息
+            if (error.message.includes('未知股票代码')) {
+                this.showNotification('系统错误：股票代码配置问题，请联系管理员', 'error');
+            }
         } finally {
             // 恢复按钮状态
             submitBtn.disabled = false;
