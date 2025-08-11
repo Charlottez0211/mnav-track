@@ -13,12 +13,17 @@ class MNAVApp {
     /**
      * 初始化应用
      */
-    initializeApp() {
+    async initializeApp() {
         this.setupEventListeners();
-        this.loadData();
+        
+        // 先检查配置状态
+        await this.checkConfigStatus();
+        
+        // 然后加载数据
+        await this.loadData();
+        
         this.startAutoRefresh();
         this.showNotification('系统启动成功', 'success');
-        this.initializeConfigForms(); // 初始化配置表单
     }
 
     /**
@@ -265,19 +270,28 @@ class MNAVApp {
             const result = await response.json();
 
             if (result.success) {
-                this.showNotification(`${symbol} 配置保存成功`, 'success');
+                this.showNotification(`${symbol} 配置保存成功，mNAV已重新计算`, 'success');
                 
                 // 更新配置状态显示
-                this.updateConfigStatus('已保存', new Date().toLocaleString('zh-CN'));
+                this.updateConfigStatus('已保存并重新计算', new Date().toLocaleString('zh-CN'));
                 
-                // 更新成功后刷新数据
-                await this.loadData();
+                // 立即更新界面显示最新的数据
+                if (result.latest_data) {
+                    this.updateUI(result.latest_data);
+                    console.log(`${symbol} 配置更新后的最新数据:`, result.latest_data);
+                } else {
+                    // 如果没有最新数据，则重新加载
+                    await this.loadData();
+                }
                 
                 // 保存到本地存储作为备份
                 this.saveToLocalStorage(symbol, shares, ethHoldings);
                 
                 // 显示当前配置信息
                 console.log(`${symbol} 配置已更新:`, result.config);
+                
+                // 验证界面是否已更新
+                this.validateUIUpdate(symbol, shares, ethHoldings);
             } else {
                 throw new Error(result.error || '配置保存失败');
             }
@@ -294,6 +308,31 @@ class MNAVApp {
             submitBtn.disabled = false;
             submitBtn.innerHTML = originalText;
         }
+    }
+
+    /**
+     * 验证界面更新是否正确
+     */
+    validateUIUpdate(symbol, shares, ethHoldings) {
+        setTimeout(() => {
+            const sharesElement = document.getElementById(`${symbol.toLowerCase()}-shares`);
+            const ethElement = document.getElementById(`${symbol.toLowerCase()}-eth-holdings`);
+            
+            if (sharesElement && ethElement) {
+                const displayedShares = parseFloat(sharesElement.textContent.replace(/,/g, ''));
+                const displayedEth = parseFloat(ethElement.textContent.replace(/,/g, ''));
+                
+                console.log(`界面验证 - ${symbol}:`);
+                console.log(`  期望: 股本=${shares}, ETH持仓=${ethHoldings}`);
+                console.log(`  实际: 股本=${displayedShares}, ETH持仓=${displayedEth}`);
+                
+                if (Math.abs(displayedShares - shares) < 1 && Math.abs(displayedEth - ethHoldings) < 1) {
+                    console.log(`✓ ${symbol} 界面更新正确`);
+                } else {
+                    console.warn(`⚠ ${symbol} 界面更新可能有问题`);
+                }
+            }
+        }, 1000); // 延迟1秒检查，确保DOM已更新
     }
 
     /**
@@ -569,6 +608,55 @@ class MNAVApp {
         if (this.updateInterval) {
             clearInterval(this.updateInterval);
             this.updateInterval = null;
+        }
+    }
+
+    /**
+     * 检查配置状态
+     */
+    async checkConfigStatus() {
+        try {
+            const response = await fetch('/api/config_status');
+            const result = await response.json();
+            
+            if (result.success) {
+                console.log('当前配置状态:', result);
+                this.updateConfigStatus('已加载', result.timestamp);
+                
+                // 更新配置表单的当前值
+                this.updateConfigFormValues(result.config);
+                
+                return result.config;
+            } else {
+                console.error('获取配置状态失败:', result.error);
+                return null;
+            }
+        } catch (error) {
+            console.error('检查配置状态时出错:', error);
+            return null;
+        }
+    }
+
+    /**
+     * 更新配置表单的值
+     */
+    updateConfigFormValues(config) {
+        if (config.SBET) {
+            const sbetSharesInput = document.getElementById('sbet-shares-input');
+            const sbetEthInput = document.getElementById('sbet-eth-input');
+            if (sbetSharesInput && sbetEthInput) {
+                sbetSharesInput.value = config.SBET.shares_outstanding;
+                sbetEthInput.value = config.SBET.eth_holdings;
+            }
+        }
+        
+        if (config.BMNR) {
+            const bmnrSharesInput = document.getElementById('bmnr-shares-input');
+            const bmnrEthInput = document.getElementById('bmnr-eth-input');
+            if (bmnrSharesInput && bmnrEthInput) {
+                bmnrSharesInput.value = config.BMNR.shares_outstanding;
+                bmnrEthInput.value = config.BMNR.eth_holdings;
+            }
         }
     }
 }

@@ -172,6 +172,11 @@
                     <span class="status-label">最后保存:</span>
                     <span id="last-save-time" class="status-value">--</span>
                 </div>
+                <div class="status-item">
+                    <button id="check-config-btn" class="config-check-btn" onclick="checkConfigStatus()">
+                        <i class="fas fa-sync-alt"></i> 检查配置
+                    </button>
+                </div>
             </div>
         </div>
 
@@ -222,6 +227,12 @@
         function resetBMNRConfig() {
             if (window.mnavApp) {
                 window.mnavApp.resetConfig('BMNR');
+            }
+        }
+        
+        function checkConfigStatus() {
+            if (window.mnavApp) {
+                window.mnavApp.checkConfigStatus();
             }
         }
     </script>

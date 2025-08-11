@@ -449,6 +449,31 @@ body {
     color: #2e7d32;
 }
 
+.config-check-btn {
+    background: #17a2b8;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 0.85rem;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.config-check-btn:hover {
+    background: #138496;
+    transform: translateY(-1px);
+    box-shadow: 0 3px 10px rgba(23, 162, 184, 0.3);
+}
+
+.config-check-btn:active {
+    transform: translateY(0);
+}
+
 /* 页脚 */
 .footer {
     text-align: center;

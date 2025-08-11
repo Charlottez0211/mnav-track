@@ -95,17 +95,38 @@ class PersistentStorage:
     def update_config(self, symbol, shares_outstanding, eth_holdings):
         """更新配置数据并保存"""
         if symbol in self.config_data:
+            # 记录更新前的值
+            old_shares = self.config_data[symbol]['shares_outstanding']
+            old_eth = self.config_data[symbol]['eth_holdings']
+            
+            # 更新配置
             self.config_data[symbol]['shares_outstanding'] = shares_outstanding
             self.config_data[symbol]['eth_holdings'] = eth_holdings
+            
+            logging.info(f"配置更新详情 - {symbol}:")
+            logging.info(f"  股本: {old_shares} -> {shares_outstanding}")
+            logging.info(f"  ETH持仓: {old_eth} -> {eth_holdings}")
             
             # 保存配置（Vercel环境只保存到内存）
             if self.save_config():
                 logging.info(f"配置更新成功: {symbol} - 股本: {shares_outstanding}, ETH持仓: {eth_holdings}")
+                
+                # 验证配置是否正确更新
+                current_config = self.config_data[symbol]
+                if (current_config['shares_outstanding'] == shares_outstanding and 
+                    current_config['eth_holdings'] == eth_holdings):
+                    logging.info(f"✓ {symbol} 配置验证通过")
+                else:
+                    logging.warning(f"⚠ {symbol} 配置验证失败")
+                
                 return True
             else:
                 logging.error(f"配置更新失败: {symbol}")
                 return False
-        return False
+        else:
+            logging.error(f"未知股票代码: {symbol}")
+            logging.error(f"当前支持的股票代码: {list(self.config_data.keys())}")
+            return False
     
     def get_config(self):
         """获取当前配置数据"""
@@ -362,6 +383,24 @@ def get_data():
             'error': '无法获取数据'
         }), 500
 
+@app.route('/api/config_status')
+def get_config_status():
+    """获取当前配置状态"""
+    try:
+        config = persistent_storage.get_config()
+        return jsonify({
+            'success': True,
+            'config': config,
+            'environment': 'vercel' if os.environ.get('VERCEL_ENV') else 'local',
+            'timestamp': datetime.now().isoformat()
+        })
+    except Exception as e:
+        logging.error(f"获取配置状态时出错: {str(e)}")
+        return jsonify({
+            'success': False,
+            'error': str(e)
+        }), 500
+
 @app.route('/api/update_config', methods=['POST'])
 def update_config():
     """更新股本和ETH持仓配置"""
@@ -377,16 +416,27 @@ def update_config():
                 'error': '缺少必要参数'
             }), 400
         
-        # 更新配置并保存到文件
+        # 更新配置并保存
         success = persistent_storage.update_config(symbol, float(shares_outstanding), float(eth_holdings))
         
         if success:
             logging.info(f"配置更新成功: {symbol} - 股本: {shares_outstanding}, ETH持仓: {eth_holdings}")
             
+            # 立即重新计算mNAV数据
+            try:
+                tracker.update_prices_and_mnav()
+                logging.info("配置更新后重新计算mNAV完成")
+            except Exception as e:
+                logging.warning(f"重新计算mNAV时出现警告: {str(e)}")
+            
+            # 获取最新的mNAV数据
+            latest_data = tracker.get_latest_data()
+            
             return jsonify({
                 'success': True,
-                'message': f'{symbol} 配置更新成功',
-                'config': persistent_storage.get_config()
+                'message': f'{symbol} 配置更新成功，mNAV已重新计算',
+                'config': persistent_storage.get_config(),
+                'latest_data': latest_data
             })
         else:
             return jsonify({
