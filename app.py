@@ -34,7 +34,7 @@ FINNHUB_API_KEY = "d2bjrs9r01qrj4im3kkgd2bjrs9r01qrj4im3kl0"
 # 配置文件路径
 CONFIG_FILE = 'user_config.json'
 
-# 默认股票配置数据
+# 默认股票配置数据 - 动态更新版本
 DEFAULT_STOCK_CONFIG = {
     'SBET': {
         'shares_outstanding': 129038060.0,  # 默认股本数量
@@ -93,7 +93,7 @@ class PersistentStorage:
             return False
     
     def update_config(self, symbol, shares_outstanding, eth_holdings):
-        """更新配置数据并保存"""
+        """更新配置数据并保存，同时更新默认配置"""
         if symbol in self.config_data:
             # 记录更新前的值
             old_shares = self.config_data[symbol]['shares_outstanding']
@@ -102,6 +102,12 @@ class PersistentStorage:
             # 更新配置
             self.config_data[symbol]['shares_outstanding'] = shares_outstanding
             self.config_data[symbol]['eth_holdings'] = eth_holdings
+            
+            # 同时更新默认配置，确保下次加载时使用新值
+            if symbol in DEFAULT_STOCK_CONFIG:
+                DEFAULT_STOCK_CONFIG[symbol]['shares_outstanding'] = shares_outstanding
+                DEFAULT_STOCK_CONFIG[symbol]['eth_holdings'] = eth_holdings
+                logging.info(f"默认配置已更新: {symbol}")
             
             logging.info(f"配置更新详情 - {symbol}:")
             logging.info(f"  股本: {old_shares} -> {shares_outstanding}")

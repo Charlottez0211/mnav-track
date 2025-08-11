@@ -72,7 +72,7 @@ class MNAVApp {
                 // 调试信息：显示当前配置
                 if (result.data.config) {
                     console.log('当前加载的配置数据:', result.data.config);
-                    this.updateConfigStatus('已加载', '--');
+                    this.updateConfigStatus('已加载');
                 }
             } else {
                 throw new Error(result.error || '数据格式错误');
@@ -273,9 +273,7 @@ class MNAVApp {
                 this.showNotification(`${symbol} 配置保存成功，mNAV已重新计算`, 'success');
                 
                 // 更新配置状态显示
-                const currentTime = new Date().toISOString();
-                const localTime = this.formatLocalTime(currentTime);
-                this.updateConfigStatus('已保存并重新计算', localTime);
+                this.updateConfigStatus('已保存并重新计算');
                 
                 // 立即更新界面显示最新的数据
                 if (result.latest_data) {
@@ -377,26 +375,69 @@ class MNAVApp {
      * 重置配置到默认值
      */
     resetConfig(symbol) {
-        const defaultConfig = {
-            'SBET': { shares: 129038060.0, eth: 521939.0 },
-            'BMNR': { shares: 121700000.0, eth: 833137.0 }
-        };
-        
-        const config = defaultConfig[symbol];
-        if (config) {
+        // 从当前配置中获取最新的默认值
+        const currentConfig = this.getCurrentConfig();
+        if (currentConfig && currentConfig[symbol]) {
+            const config = currentConfig[symbol];
             const sharesInput = document.getElementById(`${symbol.toLowerCase()}-shares-input`);
             const ethInput = document.getElementById(`${symbol.toLowerCase()}-eth-input`);
             
             if (sharesInput && ethInput) {
-                sharesInput.value = config.shares;
-                ethInput.value = config.eth;
+                sharesInput.value = config.shares_outstanding;
+                ethInput.value = config.eth_holdings;
                 
-                this.showNotification(`${symbol} 配置已重置为默认值`, 'info');
+                this.showNotification(`${symbol} 配置已重置为当前默认值`, 'info');
                 
                 // 自动保存重置后的配置
-                this.autoSaveConfig(symbol, config.shares, config.eth);
+                this.autoSaveConfig(symbol, config.shares_outstanding, config.eth_holdings);
+            }
+        } else {
+            // 如果没有当前配置，使用硬编码的默认值
+            const fallbackConfig = {
+                'SBET': { shares: 129038060.0, eth: 521939.0 },
+                'BMNR': { shares: 121700000.0, eth: 833137.0 }
+            };
+            
+            const config = fallbackConfig[symbol];
+            if (config) {
+                const sharesInput = document.getElementById(`${symbol.toLowerCase()}-shares-input`);
+                const ethInput = document.getElementById(`${symbol.toLowerCase()}-eth-input`);
+                
+                if (sharesInput && ethInput) {
+                    sharesInput.value = config.shares;
+                    ethInput.value = config.eth;
+                    
+                    this.showNotification(`${symbol} 配置已重置为系统默认值`, 'info');
+                    
+                    // 自动保存重置后的配置
+                    this.autoSaveConfig(symbol, config.shares, config.eth);
+                }
             }
         }
+    }
+
+    /**
+     * 获取当前配置
+     */
+    getCurrentConfig() {
+        // 尝试从界面元素获取当前配置
+        try {
+            const sbetShares = parseFloat(document.getElementById('sbet-shares-input')?.value || '0');
+            const sbetEth = parseFloat(document.getElementById('sbet-eth-input')?.value || '0');
+            const bmnrShares = parseFloat(document.getElementById('bmnr-shares-input')?.value || '0');
+            const bmnrEth = parseFloat(document.getElementById('bmnr-eth-input')?.value || '0');
+            
+            if (sbetShares > 0 && sbetEth > 0 && bmnrShares > 0 && bmnrEth > 0) {
+                return {
+                    'SBET': { shares_outstanding: sbetShares, eth_holdings: sbetEth },
+                    'BMNR': { shares_outstanding: bmnrShares, eth_holdings: bmnrEth }
+                };
+            }
+        } catch (error) {
+            console.error('获取当前配置失败:', error);
+        }
+        
+        return null;
     }
 
     /**
@@ -422,9 +463,7 @@ class MNAVApp {
                 this.showNotification(`${symbol} 默认配置已自动保存`, 'success');
                 
                 // 更新配置状态显示
-                const currentTime = new Date().toISOString();
-                const localTime = this.formatLocalTime(currentTime);
-                this.updateConfigStatus('已重置并保存', localTime);
+                this.updateConfigStatus('已重置并保存');
                 
                 // 刷新数据
                 await this.loadData();
@@ -437,16 +476,11 @@ class MNAVApp {
     /**
      * 更新配置状态显示
      */
-    updateConfigStatus(status, lastSaveTime) {
+    updateConfigStatus(status) {
         const statusElement = document.getElementById('config-status');
-        const lastSaveElement = document.getElementById('last-save-time');
         
         if (statusElement) {
             statusElement.textContent = status;
-        }
-        
-        if (lastSaveElement && lastSaveTime) {
-            lastSaveElement.textContent = lastSaveTime;
         }
     }
 
@@ -454,32 +488,36 @@ class MNAVApp {
      * 初始化配置表单
      */
     initializeConfigForms() {
-        // 为每个配置表单添加重置功能
+        // 为每个配置表单设置最新的默认值
         const sbetForm = document.getElementById('sbet-config-form');
         const bmnrForm = document.getElementById('bmnr-config-form');
         
         if (sbetForm) {
-            // 检查是否有本地存储的配置
-            const sbetLocalConfig = this.loadFromLocalStorage('SBET');
-            if (sbetLocalConfig) {
-                const sharesInput = document.getElementById('sbet-shares-input');
-                const ethInput = document.getElementById('sbet-eth-input');
-                if (sharesInput && ethInput) {
-                    sharesInput.value = sbetLocalConfig.shares_outstanding;
-                    ethInput.value = sbetLocalConfig.eth_holdings;
+            // 优先使用服务器返回的最新配置值
+            const sbetSharesInput = document.getElementById('sbet-shares-input');
+            const sbetEthInput = document.getElementById('sbet-eth-input');
+            if (sbetSharesInput && sbetEthInput) {
+                // 如果输入框为空，则设置默认值
+                if (sbetSharesInput.value === '') {
+                    sbetSharesInput.value = 129038060.0; // 默认股本数量
+                }
+                if (sbetEthInput.value === '') {
+                    sbetEthInput.value = 521939.0; // 默认ETH持仓量
                 }
             }
         }
         
         if (bmnrForm) {
-            // 检查是否有本地存储的配置
-            const bmnrLocalConfig = this.loadFromLocalStorage('BMNR');
-            if (bmnrLocalConfig) {
-                const sharesInput = document.getElementById('bmnr-shares-input');
-                const ethInput = document.getElementById('bmnr-eth-input');
-                if (sharesInput && ethInput) {
-                    sharesInput.value = bmnrLocalConfig.shares_outstanding;
-                    ethInput.value = bmnrLocalConfig.eth_holdings;
+            // 优先使用服务器返回的最新配置值
+            const bmnrSharesInput = document.getElementById('bmnr-shares-input');
+            const bmnrEthInput = document.getElementById('bmnr-eth-input');
+            if (bmnrSharesInput && bmnrEthInput) {
+                // 如果输入框为空，则设置默认值
+                if (bmnrSharesInput.value === '') {
+                    bmnrSharesInput.value = 121700000.0; // 默认股本数量
+                }
+                if (bmnrEthInput.value === '') {
+                    bmnrEthInput.value = 833137.0; // 默认ETH持仓量
                 }
             }
         }
@@ -628,9 +666,8 @@ class MNAVApp {
             if (result.success) {
                 console.log('当前配置状态:', result);
                 
-                // 将UTC时间转换为本地时间显示
-                const localTime = this.formatLocalTime(result.timestamp);
-                this.updateConfigStatus('已加载', localTime);
+                // 更新配置状态显示
+                this.updateConfigStatus('已加载');
                 
                 // 更新配置表单的当前值
                 this.updateConfigFormValues(result.config);
@@ -718,8 +755,10 @@ class MNAVApp {
             const sbetSharesInput = document.getElementById('sbet-shares-input');
             const sbetEthInput = document.getElementById('sbet-eth-input');
             if (sbetSharesInput && sbetEthInput) {
+                // 始终使用服务器返回的最新值
                 sbetSharesInput.value = config.SBET.shares_outstanding;
                 sbetEthInput.value = config.SBET.eth_holdings;
+                console.log('SBET配置表单已更新:', config.SBET);
             }
         }
         
@@ -727,8 +766,10 @@ class MNAVApp {
             const bmnrSharesInput = document.getElementById('bmnr-shares-input');
             const bmnrEthInput = document.getElementById('bmnr-eth-input');
             if (bmnrSharesInput && bmnrEthInput) {
+                // 始终使用服务器返回的最新值
                 bmnrSharesInput.value = config.BMNR.shares_outstanding;
                 bmnrEthInput.value = config.BMNR.eth_holdings;
+                console.log('BMNR配置表单已更新:', config.BMNR);
             }
         }
     }
