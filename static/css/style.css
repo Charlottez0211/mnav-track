@@ -284,36 +284,6 @@ body {
     background: rgba(255, 255, 255, 0.2);
 }
 
-/* mNAV比值卡片特殊样式 */
-.ratio-card {
-    background: linear-gradient(135deg, #28a745, #20c997);
-    color: white;
-}
-
-.ratio-card .card-header h3,
-.ratio-card .metric-value,
-.ratio-card .sub-value {
-    color: white;
-}
-
-.ratio-card .metric-label,
-.ratio-card .sub-label {
-    color: rgba(255, 255, 255, 0.8);
-}
-
-.ratio-card .card-header {
-    border-bottom-color: rgba(255, 255, 255, 0.2);
-}
-
-.ratio-card .sub-metric {
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-.ratio-card .sub-metric:hover {
-    background: rgba(255, 255, 255, 0.2);
-}
-
 /* 配置区域 */
 .config-section {
     background: white;
@@ -327,7 +297,7 @@ body {
     font-size: 1.5rem;
     font-weight: 600;
     color: #333;
-    margin-bottom: 10px;
+    margin-bottom: 25px;
     display: flex;
     align-items: center;
     gap: 10px;
@@ -337,18 +307,10 @@ body {
     color: #667eea;
 }
 
-.config-description {
-    color: #666;
-    font-size: 0.95rem;
-    margin-bottom: 25px;
-    line-height: 1.5;
-}
-
 .config-cards {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 25px;
-    margin-bottom: 25px;
 }
 
 .config-card {
@@ -394,113 +356,29 @@ body {
     box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
 }
 
-.form-actions {
-    display: flex;
-    gap: 10px;
-    margin-top: 20px;
-}
-
 .config-btn {
-    flex: 1;
+    width: 100%;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    border: none;
     padding: 12px 20px;
     border-radius: 10px;
     cursor: pointer;
     font-weight: 600;
-    font-size: 0.9rem;
+    font-size: 1rem;
     transition: all 0.3s ease;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 8px;
-    border: none;
 }
 
-.config-btn.primary {
-    background: linear-gradient(135deg, #667eea, #764ba2);
-    color: white;
-}
-
-.config-btn.primary:hover {
+.config-btn:hover {
     transform: translateY(-2px);
     box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
 }
 
-.config-btn.secondary {
-    background: #6c757d;
-    color: white;
-}
-
-.config-btn.secondary:hover {
-    background: #5a6268;
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(108, 117, 125, 0.4);
-}
-
 .config-btn:active {
-    transform: translateY(0);
-}
-
-.config-btn:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-    transform: none;
-}
-
-.config-status {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: #f8f9fa;
-    padding: 20px 25px;
-    border-radius: 15px;
-    border: 1px solid #e9ecef;
-    flex-wrap: wrap;
-    gap: 15px;
-}
-
-.config-status .status-item {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.config-status .status-label {
-    font-weight: 600;
-    color: #555;
-    font-size: 0.9rem;
-}
-
-.config-status .status-value {
-    font-weight: 500;
-    padding: 5px 12px;
-    border-radius: 8px;
-    font-size: 0.9rem;
-    background: #e8f5e8;
-    color: #2e7d32;
-}
-
-.config-check-btn {
-    background: #17a2b8;
-    color: white;
-    border: none;
-    padding: 8px 16px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: 500;
-    font-size: 0.85rem;
-    transition: all 0.3s ease;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-}
-
-.config-check-btn:hover {
-    background: #138496;
-    transform: translateY(-1px);
-    box-shadow: 0 3px 10px rgba(23, 162, 184, 0.3);
-}
-
-.config-check-btn:active {
     transform: translateY(0);
 }
 

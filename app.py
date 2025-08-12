@@ -42,7 +42,7 @@ DEFAULT_STOCK_CONFIG = {
         'symbol': 'SBET'
     },
     'BMNR': {
-        'shares_outstanding': 121700000.0,  # 默认股本数量
+        'shares_outstanding': 173496950.0,  # 默认股本数量
         'eth_holdings': 1150263.0,           # 默认ETH持仓量
         'symbol': 'BMNR'
     }
