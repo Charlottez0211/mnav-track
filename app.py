@@ -37,8 +37,8 @@ CONFIG_FILE = 'user_config.json'
 # 默认股票配置数据 - 动态更新版本
 DEFAULT_STOCK_CONFIG = {
     'SBET': {
-        'shares_outstanding': 168866724.0,  # 默认股本数量
-        'eth_holdings': 740760.0,           # 默认ETH持仓量
+        'shares_outstanding':  187466724.00 ,  # 默认股本数量
+        'eth_holdings': 797704,           # 默认ETH持仓量
         'symbol': 'SBET'
     },
     'BMNR': {
