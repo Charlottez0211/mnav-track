@@ -43,7 +43,7 @@ DEFAULT_STOCK_CONFIG = {
     },
     'BMNR': {
         'shares_outstanding': 221515180,  # 默认股本数量
-        'eth_holdings': 1713899.0,           # 默认ETH持仓量
+        'eth_holdings': 1792690.0,           # 默认ETH持仓量
         'symbol': 'BMNR'
     }
 }
